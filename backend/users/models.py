@@ -17,6 +17,10 @@ class User(AbstractUser):
         if not self.is_superuser and not self.pk:
             self.password = make_password(self.password)
         super().save(*args, **kwargs)
+        
+class favorite_places(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False)
+    place = models.ForeignKey(PopularPlace, on_delete=models.CASCADE, blank=False)
     
 @receiver(reset_password_token_created)
 def password_reser_token_created(reset_password_token, *args, **kwargs):

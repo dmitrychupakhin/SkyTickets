@@ -14,4 +14,4 @@ class AllDetailDirSerializer(serializers.ModelSerializer):
 class PlaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = PopularPlace
-        fields = ('title', 'photo', 'description')
+        fields = ('id', 'title', 'photo', 'description')
