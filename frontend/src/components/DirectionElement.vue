@@ -1,13 +1,13 @@
 <template>
-<div class="row mx-0 px-0">
+<div class="row mx-0 px-0" :data-aos="isReverse ? 'fade-left' : 'fade-right'">
     <div :class="['col-6', isReverse ? 'order-2' : 'order-1']">
         <div class="d-flex flex-column h-100">
             <div class="col-12 fs-1 mb-2">
                 Москва
             </div>
             <div class="col-12 fs-6 fw-light">
-                Вы не можете уложиться в бюджет? Или просто не хотите продумывать всё до мелочей. 
-                Данный сервис сделает это за вас, используя математические алгоритмы. 
+                Вы не можете уложиться в бюджет? Или просто не хотите продумывать всё до мелочей.
+                Данный сервис сделает это за вас, используя математические алгоритмы.
             </div>
             <div class="col-12 mt-auto">
                 <ButtonTwo class="d-flex gap-2 px-4 py-2 fs-5 rounded-pill">
