@@ -65,6 +65,9 @@
                 </div>
                 <div class="mx-0 px-0">
                     <DirectionElementList></DirectionElementList>
+                    <div class="col-12 d-flex justify-content-center">
+                        <ButtonOne class="px-4 py-2 fs-5 rounded-pill">Показать еще</ButtonOne>
+                    </div>
                 </div>
             </div>
         </div>
