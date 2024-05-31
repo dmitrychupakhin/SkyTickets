@@ -1,0 +1,74 @@
+:root {
+    --custom-title-color: rgb(33, 33, 38);
+    --custom-description-color: rgb(49,48,64);
+
+    --custom-light-background-color: rgb(253, 252,255);
+    
+    --custom-dark-background-color: rgb(33, 33, 38);
+    --custom-dark-background-color-hover: rgb(40, 40, 46);
+    --custom-dark-background-color-active: rgb(33, 33, 38);
+
+    --custom-green-color: rgb(83, 95, 87);
+    --custom-blue-color: rgb(58, 57, 70);
+
+    --custom-light-text-color: rgb(253, 252,255);
+    --custom-dark-text-color: rgb(42, 41, 51);
+
+    --custom-border-color: rgb(229, 228, 232);
+    --custom-error-text-color: #954545;
+}
+
+.custom-error-text-color{
+    color: var(--custom-error-text-color) !important;
+}
+/* Определение цветов */
+.custom-blue-background-color{
+    background: var(--custom-blue-color);
+}
+.custom-green-background-color{
+    background: var(--custom-green-color);
+}
+
+.custom-title-color{
+    color:  var(--custom-title-color) !important;
+}
+.custom-description-color{
+    color: var(--custom-description-color) !important;
+}
+
+.custom-light-background-color{
+    background: var(--custom-light-background-color) !important;
+}
+.custom-dark-background-color{
+    background: var(--custom-dark-background-color) !important;
+}
+
+.custom-light-text-color{
+    color: var(--custom-light-text-color) !important;
+}
+.custom-dark-text-color{
+    color: var(--custom-dark-text-color) !important;
+}
+
+.custom-border-color{
+    border-color: var(--custom-border-color) !important;
+}
+
+/* Переопределения Bootstrap 5 */
+.container-fluid{
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.fs-title{
+    font-size: calc(2rem + 1.5vw) !important;
+}
+
+body {
+    font-family: "Inter", sans-serif !important;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-variation-settings: "slnt" 0;
+    background: var(--custom-light-background-color) !important;
+    color: var(--custom-dark-text-color) !important;
+}
+
