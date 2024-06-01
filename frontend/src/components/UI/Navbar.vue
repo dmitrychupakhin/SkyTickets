@@ -24,7 +24,7 @@
                 </li>
                 <ul v-if="token" class="navbar-nav ms-auto col-12 col-xl-auto d-inline-flex">
                     <li class="nav-item mx-0">
-                        <router-link class="custom-nav-link d-flex justify-content-center align-items-center flex-column" :to="{name: 'home'}">
+                        <router-link class="custom-nav-link d-flex justify-content-center align-items-center flex-column" :to="{name: 'profile'}">
                             <ButtonTwo class="d-block fs-6 fw-normal px-4 py-2 rounded-pill">Профиль</ButtonTwo>
                         </router-link>
                     </li>

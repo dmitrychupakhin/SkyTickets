@@ -32,14 +32,14 @@
     <div class="row mx-0 px-5 my-5" data-aos="fade-up">
         <div class="col-12 border custom-border-color">
             <div class="row m-0 p-4">
-                <div class="col-12 text-center fs-5 fw-light custom-purple-text-color mb-3">Расчет стоимости</div>
+                <div class="col-12 text-center fs-5 fw-light custom-purple-text-color mb-3">Какая будет стоимость?</div>
                 <div class="col-12 text-center fs-2 fw-light custom-title-color mb-3">
                     Современно. Быстро. Точно.
                 </div>
                 <div class="col-12 fs-6 text-center">
                     <div class="row justify-content-center">
-                        <div class="col-8">
-                            ВЫ не можете уложиться в бюджет? Или просто не хотите продумывать всё до мелочей.
+                        <div class="col-8 fw-light">
+                            Вы не можете уложиться в бюджет? Или просто не хотите продумывать всё до мелочей.
                             Данный сервис сделает это за вас, используя математические алгоритмы. 
                         </div>
                     </div>
@@ -53,13 +53,13 @@
     <div class="row mx-0 px-5 my-5" data-aos="fade-up">
         <div class="col-12 px-0">
             <div class="row m-0">
-                <div class="col-12 text-center fs-5 fw-light custom-purple-text-color mb-3">Популярные места</div>
+                <div class="col-12 text-center fs-5 fw-light custom-purple-text-color mb-3">Куда можно сходить?</div>
                 <div class="col-12 text-center fs-2 fw-light custom-title-color mb-3">
                     Популярные места для этого направления
                 </div>
                 <div class="col-12 fs-6 text-center mb-5">
                     <div class="row justify-content-center">
-                        <div class="col-8">
+                        <div class="col-8 fw-light">
                             Выберите направление, и наш сервис предоставит вам список значимых и интересных мест для отдыха.  
                         </div>
                     </div>

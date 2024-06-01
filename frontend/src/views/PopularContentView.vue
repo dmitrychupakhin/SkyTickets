@@ -10,7 +10,7 @@
             </div>
             <div class="col-12 fs-6 text-center mb-5">
                 <div class="row justify-content-center">
-                    <div class="col-8">
+                    <div class="col-8 fw-light">
                         Откройте для себя лучшие места для вашего следующего приключения!
                     </div>
                 </div>

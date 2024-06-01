@@ -1,13 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import PopularContentView from '../views/PopularContentView.vue'
-/* import ProfileView from '../views/ProfileView.vue'
+import DirectionView from '../views/DirectionView.vue'
+import ProfileView from '../views/ProfileView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import ResetPasswordView from '../views/ResetPasswordView.vue'
-import ContentPageView from '../views/ContentPageView.vue'
 import ProfileEditView from '../views/ProfileEditPage.vue'
-import ContentPageView2 from '../views/ContentPageView2.vue' */
 import { useAuthStore } from '../store/auth'
 import { computed, nextTick } from 'vue';
 
@@ -28,7 +27,15 @@ const routes = [
       auth: false
     }
   },
-  /* {
+  {
+    path: '/direction/',
+    name: 'direction',
+    component: DirectionView,
+    meta: {
+      auth: false
+    }
+  },
+  {
     path: '/profile-edit',
     name: 'profile-edit',
     component: ProfileEditView,
@@ -68,14 +75,6 @@ const routes = [
       auth: false
     }
   },
-  {
-    path: '/content2/',
-    name: 'content2',
-    component: ContentPageView2,
-    meta: {
-      auth: true
-    }
-  }, */
   { 
     path: '/:catchAll(.*)',
     redirect: '/'

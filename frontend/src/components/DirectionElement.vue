@@ -10,7 +10,7 @@
                 Данный сервис сделает это за вас, используя математические алгоритмы.
             </div>
             <div class="col-12 mt-auto">
-                <ButtonTwo class="d-flex gap-2 px-4 py-2 fs-5 rounded-pill">
+                <ButtonTwo class="d-flex gap-2 px-4 py-2 fs-5 rounded-pill" @click="goToPage">
                     <div>Перейти</div>
                     <i class="bi bi-arrow-right"></i>
                 </ButtonTwo>
@@ -36,6 +36,11 @@ export default {
             default: false
         }
     },
+    methods: {
+        goToPage() {
+            this.$router.push({ name: 'direction' }); 
+        }
+    }
 };
 </script>
 
