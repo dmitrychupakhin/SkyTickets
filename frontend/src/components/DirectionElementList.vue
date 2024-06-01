@@ -6,8 +6,6 @@
 </div>
 </template>
 
-  
-  
 <script>
 import DirectionElement from "@/components/DirectionElement"
 export default {
@@ -15,14 +13,11 @@ export default {
     components: {
         DirectionElement
     },
-    data() {
-        return {
-            elements: [
-                { id: 1, name: "Element 1" },
-                { id: 2, name: "Element 2" },
-                { id: 3, name: "Element 3" },
-            ]
-        };
+    props: {
+        elements: {
+            type: Array,
+            required: true,
+        },
     },
     methods: {
         isOdd(index) {
@@ -31,8 +26,7 @@ export default {
     }
 };
 </script>
-  
-  
+
 <style scoped>
 /* Дополнительные стили (если нужны) */
 </style>

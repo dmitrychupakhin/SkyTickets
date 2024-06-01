@@ -1,96 +1,91 @@
 <template>
-  <div>
-      <Navbar></Navbar>
-      <div class="row mx-1 mx-md-5 justify-content-center mb-5 mt-2" style="min-height: 100vh;">
-          <div class="col-8 py-4">
-              <div class="row position-relative shadow rounded py-4 px-3 mb-4">
-                  <div class="col-12 fw-medium fs-4 mb-4">
-                      Личная информация
-                  </div>
-                  <div class="col-6 d-flex justify-content-center mb-2 px-5" style="height: min-content;">
-                      <div class="ratio ratio-1x1 position-relative rounded" style="width: 100%; max-height: 100%;">
-                          <img :src="userImage" @click="triggerFileInput" alt="User Image" class="userImage shadow" style="object-fit: cover; width: 100%; height: 100%; cursor: pointer;" />
-                      </div>
-                      <input type="file" ref="fileInput" @change="onFileSelected" style="display: none;" />
-                  </div>
-                  <div class="col-6 mb-2">
-                      <div class="row m-0 p-0">
-                          <div class="col-12">
-                              <label for="username" class="inp mb-2 w-100">
-                                  <input v-model="username" type="text" id="username" placeholder="&nbsp;">
-                                  <span class="label">Имя пользователя</span>
-                                  <span class="focus-bg"></span>
-                              </label>
-                          </div>
-                          <div class="col-12">
-                              <label for="firstName" class="inp mb-2 w-100">
-                                  <input v-model="firstName" type="text" id="firstName" placeholder="&nbsp;">
-                                  <span class="label">Имя</span>
-                                  <span class="focus-bg"></span>
-                              </label>
-                          </div>
-                          <div class="col-12">
-                              <label for="lastName" class="inp mb-2 w-100">
-                                  <input v-model="lastName" type="text" id="lastName" placeholder="&nbsp;">
-                                  <span class="label">Фамилия</span>
-                                  <span class="focus-bg"></span>
-                              </label>
-                          </div>
-                          <div class="col-12">
-                              <label for="about" class="inp w-100">
-                                  <textarea v-model="about" id="about" placeholder="&nbsp;"></textarea>
-                                  <span class="label">О себе</span>
-                                  <span class="focus-bg"></span>
-                              </label>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-6">
-                      <label for="birthdate" class="inp mb-2 w-100">
-                          <input v-model="birthdate" type="date" id="birthdate" placeholder="&nbsp;">
-                          <span class="label">Дата рождения</span>
-                          <span class="focus-bg"></span>
-                      </label>
-                  </div>
-                  <div class="col-6">
-                      <label for="location" class="inp mb-2 w-100">
-                          <input v-model="location" type="text" id="location" placeholder="&nbsp;">
-                          <span class="label">Местоположение</span>
-                          <span class="focus-bg"></span>
-                      </label>
-                  </div>
-              </div>
-              <div class="row position-relative shadow rounded py-4 px-3 mb-4">
-                  <div class="col-12 fw-medium fs-4 mb-2">
-                      Контакты
-                  </div>
-                  <div class="row m-0 p-0">
-                      <div class="col-6">
-                          <label for="phone" class="inp mb-2 w-100">
-                              <input v-model="phone" type="tel" id="phone" placeholder="&nbsp;">
-                              <span class="label">Номер телефона</span>
-                              <span class="focus-bg"></span>
-                          </label>
-                      </div>
-                  </div>
-                  <div class="row m-0 p-0">
-                      <div class="col-6">
-                          <label for="email" class="inp mb-2 w-100">
-                              <input v-model="email" type="email" id="email" placeholder="&nbsp;">
-                              <span class="label">Почта</span>
-                              <span class="focus-bg"></span>
-                          </label>
-                      </div>
-                  </div>
-              </div>
-              <div class="row shadow rounded py-3 px-3 d-flex justify-content-end">
-                  <ButtonOne class="d-flex w-auto py-2 fs-5 px-4" @click="saveAll">Сохранить</ButtonOne>
-              </div>
-          </div>
-      </div>
-      <Footer></Footer>
-  </div>
+<div>
+    <Navbar></Navbar>
+    <div class="row mx-1 mx-md-5 justify-content-center mb-5 mt-2" style="min-height: 100vh;">
+        <div class="col-8 py-4">
+            <div class="row position-relative shadow rounded py-4 px-3 mb-4">
+                <div class="col-12 text-center fw-light fs-2 mb-5">
+                    Личная информация
+                </div>
+                <div class="col-6 d-flex justify-content-center mb-2 px-5" style="height: min-content;">
+                    <div class="ratio ratio-1x1 position-relative rounded" style="width: 100%; max-height: 100%;">
+                        <img :src="userImage" @click="triggerFileInput" alt="User Image" class="userImage shadow" style="object-fit: cover; width: 100%; height: 100%; cursor: pointer; border-radius: 50%;" />
+                    </div>
+                    <input type="file" ref="fileInput" @change="onFileSelected" style="display: none;" />
+                </div>
+                <div class="col-6 mb-2">
+                    <div class="row m-0 p-0">
+                        <div class="col-12">
+                            <label for="username" class="inp mb-2 w-100">
+                                <input v-model="username" type="text" id="username" placeholder="&nbsp;">
+                                <span class="label">Имя пользователя</span>
+                                <span class="focus-bg"></span>
+                            </label>
+                        </div>
+                        <div class="col-12">
+                            <label for="firstName" class="inp mb-2 w-100">
+                                <input v-model="firstName" type="text" id="firstName" placeholder="&nbsp;">
+                                <span class="label">Имя</span>
+                                <span class="focus-bg"></span>
+                            </label>
+                        </div>
+                        <div class="col-12">
+                            <label for="lastName" class="inp mb-2 w-100">
+                                <input v-model="lastName" type="text" id="lastName" placeholder="&nbsp;">
+                                <span class="label">Фамилия</span>
+                                <span class="focus-bg"></span>
+                            </label>
+                        </div>
+                        <div class="col-12">
+                            <label for="birthdate" class="inp mb-2 w-100">
+                                <input v-model="birthdate" type="date" id="birthdate" placeholder="&nbsp;">
+                                <span class="label">Дата рождения</span>
+                                <span class="focus-bg"></span>
+                            </label>
+                        </div>
+                        <div class="col-12">
+                            <label for="location" class="inp mb-2 w-100">
+                                <input v-model="location" type="text" id="location" placeholder="&nbsp;">
+                                <span class="label">Местоположение</span>
+                                <span class="focus-bg"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row position-relative shadow rounded py-4 px-3 mb-4">
+                <div class="col-12 text-center fw-light fs-2 mb-5">
+                    Контакты
+                </div>
+                <div class="row m-0 p-0">
+                    <div class="col-6">
+                        <label for="phone" class="inp mb-2 w-100">
+                            <input v-model="phone" type="tel" id="phone" placeholder="&nbsp;">
+                            <span class="label">Номер телефона</span>
+                            <span class="focus-bg"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row m-0 p-0">
+                    <div class="col-6">
+                        <label for="email" class="inp mb-2 w-100">
+                            <input v-model="email" type="email" id="email" placeholder="&nbsp;">
+                            <span class="label">Почта</span>
+                            <span class="focus-bg"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row shadow rounded py-3 px-3 d-flex justify-content-end">
+                <ButtonOne class="d-flex w-auto py-2 fs-5 px-4" @click="saveAll">Сохранить</ButtonOne>
+            </div>
+        </div>
+    </div>
+    <Footer></Footer>
+</div>
 </template>
+
+  
 <script>
 import { useAuthStore } from '@/store/auth';
 import axiosApiInstanceAuth from '../api';
@@ -99,7 +94,7 @@ export default {
     data() {
         return {
             userImage: '',
-            imageFile: null,  // добавляем для хранения выбранного файла
+            imageFile: null, // добавляем для хранения выбранного файла
             username: '',
             firstName: '',
             lastName: '',
@@ -171,7 +166,9 @@ export default {
                         'Content-Type': 'multipart/form-data'
                     }
                 });
-                if (response.status !== 200) {
+                if (response.status === 200) {
+                    this.$router.push('/profile'); // Перенаправление на страницу профиля
+                } else {
                     throw new Error('Network response was not ok');
                 }
             } catch (error) {

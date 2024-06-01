@@ -19,7 +19,7 @@
         <div class="col-12">
             <div class="row">
                 <div class="mx-0 px-0">
-                    <DirectionElementList></DirectionElementList>
+                    <DirectionElementList :elements="cities"></DirectionElementList>
                     <div class="col-12 d-flex justify-content-center">
                         <ButtonOne class="px-4 py-2 fs-5 rounded-pill">Показать еще</ButtonOne>
                     </div>
@@ -32,11 +32,39 @@
 </template>
 
 <script>
+import axiosApiInstanceAuth from '../api';
 import DirectionElementList from "@/components/DirectionElementList"
 export default {
     components: {
         DirectionElementList
     },
+    data(){
+        return{
+            cities: []
+        }
+    },
+    methods: {
+        async fetchCities() {
+            try {
+                const response = await axiosApiInstanceAuth.get(`http://127.0.0.1:8000/api/directions/popular/`);
+                const cityData = response.data;
+                console.log(cityData);
+                this.cities = response.data.map((city, index) => ({
+                    id: city.id,
+                    title: city.city,
+                    photo: city.photo,
+                    description: city.description
+                }));
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            } finally {
+                this.isLoading = false;
+            }
+        },
+    },
+    created() {
+        this.fetchCities();
+    }
 };
 </script>
 

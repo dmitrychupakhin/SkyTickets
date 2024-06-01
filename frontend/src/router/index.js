@@ -28,7 +28,7 @@ const routes = [
     }
   },
   {
-    path: '/direction/',
+    path: '/direction/:id',
     name: 'direction',
     component: DirectionView,
     meta: {

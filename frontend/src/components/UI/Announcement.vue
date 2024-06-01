@@ -1,9 +1,8 @@
 <template>
-    <div  class="fw-lighter text-center py-1 fs-6 custom-dark-background-color custom-light-text-color">
-        <div>Хотите получить больше возможностей? <router-link class="custom-light-text-color" :to="{name: 'home'}">Войти</router-link></div>
+    <div v-if="!token" class="fw-lighter text-center py-1 fs-6 custom-dark-background-color custom-light-text-color">
+        <div>Хотите получить больше возможностей? <router-link class="custom-light-text-color" :to="{name: 'sign-in'}">Войти</router-link></div>
     </div>
 </template>
-<!-- v-if="!token" -->
 <script>
 export default {
 name: "Announcement",
@@ -12,7 +11,7 @@ components: {},
 </script>
 
 <script setup>
-/* import {computed} from 'vue'
+import {computed} from 'vue'
 import {useAuthStore} from '@/store/auth'
 import { useRouter } from 'vue-router';
 
@@ -35,7 +34,7 @@ const logout = () => {
   router.push('/signin')
 }
 
-checkUser() */
+checkUser()
 </script>
 
 <style scoped>

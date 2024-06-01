@@ -6,19 +6,18 @@
         <div class="col-12 mb-5 px-1 px-md-4">
             <div class="row">
                 <div class="col-12 text-center fs-title fw-normal custom-title-color mb-3">
-                    Москва
+                    {{ cityName }}
                 </div>
                 <div class="col-12 fs-6 text-center fw-light mb-5">
                     <div class="row justify-content-center">
                         <div class="col-12 col-md-8">
-                            ВЫ не можете уложиться в бюджет? Или просто не хотите продумывать всё до мелочей.
-                            Данный сервис сделает это за вас, используя математические алгоритмы.
+                            {{ cityDescription }}
                         </div>
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="row justify-content-center">
-                        <img class="col-10 col-md-5" :src="require('@/assets/image 7.png')" alt="Overlay">
+                        <img class="col-10 col-md-5" :src="cityImage" alt="Overlay">
                     </div>
                 </div>
             </div>
@@ -54,40 +53,10 @@
                         <div class="col-12 d-flex justify-content-center mb-3">
                             <div class="pb-2 border-bottom custom-border-color" style="width: 60px;"></div>
                         </div>
-                        <div class="col-12 text-center fs-6 fw-light">Здесь вы найдете уникальные и интересные факты о нашем городе,
-                            которые были сгенерированы с помощью передовой не</div>
+                        <div class="col-12 text-center fs-6 fw-light">{{ population }}</div>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 pb-2 p-md-3 pe-md-0">
-                    <div class="row w-100 mx-0 border custom-border-color p-4 p-md-5 ps-md-0">
-                        <div class="col-12 text-center fs-4 mb-2">Количество жителей</div>
-                        <div class="col-12 d-flex justify-content-center mb-3">
-                            <div class="pb-2 border-bottom custom-border-color" style="width: 60px;"></div>
-                        </div>
-                        <div class="col-12 text-center fs-6 fw-light">Здесь вы найдете уникальные и интересные факты о нашем городе,
-                            которые были сгенерированы с помощью передовой не</div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 pb-2 p-md-3 ps-md-0">
-                    <div class="row w-100 mx-0 border custom-border-color p-4 p-md-5 ps-md-0">
-                        <div class="col-12 text-center fs-4 mb-2">Количество жителей</div>
-                        <div class="col-12 d-flex justify-content-center mb-3">
-                            <div class="pb-2 border-bottom custom-border-color" style="width: 60px;"></div>
-                        </div>
-                        <div class="col-12 text-center fs-6 fw-light">Здесь вы найдете уникальные и интересные факты о нашем городе,
-                            которые были сгенерированы с помощью передовой не</div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 pb-2 p-md-3 pe-md-0">
-                    <div class="row w-100 mx-0 border custom-border-color p-4 p-md-5 ps-md-0">
-                        <div class="col-12 text-center fs-4 mb-2">Количество жителей</div>
-                        <div class="col-12 d-flex justify-content-center mb-3">
-                            <div class="pb-2 border-bottom custom-border-color" style="width: 60px;"></div>
-                        </div>
-                        <div class="col-12 text-center fs-6 fw-light">Здесь вы найдете уникальные и интересные факты о нашем городе,
-                            которые были сгенерированы с помощью передовой не</div>
-                    </div>
-                </div>
+                <!-- Повторите блок для других интересных фактов -->
             </div>
         </div>
     </div>
@@ -96,12 +65,12 @@
             <div class="row m-0 py-5 border custom-border-color">
                 <div class="col-12 text-center fs-5 fw-light custom-purple-text-color mb-3">Куда здесь можно сходить?</div>
                 <div class="col-12 text-center fs-2 fw-light custom-title-color mb-3">
-                    Интересные места города Москва
+                    Интересные места города {{ cityName }}
                 </div>
                 <div class="col-12 fs-6 text-center">
                     <div class="row justify-content-center">
                         <div class="col-8 fw-light">
-                            Откройте для себя самые захватывающие и примечательные места нашего города! 
+                            Откройте для себя самые захватывающие и примечательные места нашего города!
                             Наш раздел "Интересные места города" предлагает подборку мест, которые стоит посетить.
                         </div>
                     </div>
@@ -125,20 +94,49 @@
 </div>
 </template>
 
+    
+    
 <script>
+import axios from 'axios';
 import DirectionElementList from "@/components/DirectionElementList"
+
 export default {
     components: {
         DirectionElementList
     },
     data() {
         return {
-            element: { id: 1, name: "Element 1" },
+            cityName: '',
+            cityDescription: '',
+            cityImage: '',
+            population: '',
+            // Другие переменные для данных
         };
     },
-}
+    methods: {
+        fetchData() {
+            const id = this.$route.params.id;
+            axios.get(`https://localhost/api/direction/${id}`)
+                .then(response => {
+                    const data = response.data;
+                    this.cityName = data.name;
+                    this.cityDescription = data.description;
+                    this.cityImage = data.image;
+                    this.population = data.population;
+                    // Заполните другие переменные данными из ответа
+                })
+                .catch(error => {
+                    console.error("Ошибка при получении данных:", error);
+                });
+        }
+    },
+    created() {
+        this.fetchData();
+    }
+};
 </script>
-
+    
+    
 <style scoped>
-
+/* Ваши стили */
 </style>

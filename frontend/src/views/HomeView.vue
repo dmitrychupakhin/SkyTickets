@@ -10,7 +10,7 @@
             Сервис поможет подобрать вам удобный маршут, исходя из ваших предпочтений,<br /> с учётом ваших финансовых возможностей.
         </div>
         <div class="position-relative d-flex justify-content-center">
-            <ButtonOne class="px-4 py-2 fs-5 rounded-pill position-absolute z-2 mt-4">Расчитать</ButtonOne>
+            <ButtonOne class="px-4 py-2 fs-5 rounded-pill position-absolute z-2 mt-4" @click="calc">Рассчитать</ButtonOne>
         </div>
         <div class="col-12 position-relative video-container mx-0 px-0" data-aos="fade-up">
             <img class="position-absolute video-overlay" :src="require('@/assets/home-video-head.svg')" alt="Overlay">
@@ -40,12 +40,80 @@
                     <div class="row justify-content-center">
                         <div class="col-12 col-md-8 fw-light">
                             Вы не можете уложиться в бюджет? Или просто не хотите продумывать всё до мелочей.
-                            Данный сервис сделает это за вас, используя математические алгоритмы. 
+                            Данный сервис сделает это за вас, используя математические алгоритмы.
                         </div>
                     </div>
                 </div>
-                <div class="col-12" style="height: 40vh;">
+                <div class="col-12 col-md-6 p-4 rounded-3">
+                    <div class="mb-3">
+                        <label for="from" class="form-label">От:</label>
+                        <select v-model="selectedFrom" id="from" class="form-select red-background">
+                            <option v-for="city in cities" :key="city.id" :value="city">
+                                {{ city.city }}
+                            </option>
+                        </select>
+                    </div>
 
+                    <div class="mb-3">
+                        <label for="to" class="form-label">Куда:</label>
+                        <select v-model="selectedTo" id="to" class="form-select red-background">
+                            <option v-for="city in cities" :key="city.id" :value="city">
+                                {{ city.city }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Дата:</label>
+                        <div class="d-flex gap-2">
+                            <select v-model="selectedMonth" id="month" class="form-select red-background">
+                                <option v-for="(month, index) in months" :key="index" :value="index + 1">
+                                    {{ month }}
+                                </option>
+                            </select>
+                            <select v-model="selectedDay" id="day" class="form-select red-background">
+                                <option v-for="day in daysInMonth" :key="day" :value="day">
+                                    {{ day }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="time" class="form-label">Время:</label>
+                        <input type="time" v-model="selectedTime" id="time" class="form-control red-background" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="ticketType" class="form-label">Тип билета:</label>
+                        <select v-model="selectedType" id="ticketType" class="form-select red-background">
+                            <option v-for="(tType, index) in ticketType" :key="index" :value="index + 1">
+                                {{ tType }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="flightTime" class="form-label">Время на полет:</label>
+                        <input type="time" v-model="selectedFlightTime" id="flightTime" class="form-control red-background" />
+                    </div>
+                    <div class="mb-4">
+                        <label for="numTransfers" class="form-label">Количество пересадок:</label>
+                        <select v-model="selectedNumTransfers" id="numTransfers" class="form-select red-background">
+                            <option v-for="(tType, index) in numTransfers" :key="index" :value="index + 1">
+                                {{ tType }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="d-flex">
+                        <ButtonOne class="px-4 py-2 fs-5 rounded-pill" @click="calc">Рассчитать</ButtonOne>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 p-4 rounded-3">
+                    <div class="row">
+                        <div class="col-12 text-center fs-5 fw-light">
+                            Нейросеть 🤖 определила наиболее вероятную цену
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -60,12 +128,12 @@
                 <div class="col-12 fs-6 text-center mb-5">
                     <div class="row justify-content-center">
                         <div class="col-12 col-md-8 fw-light">
-                            Выберите направление, и наш сервис предоставит вам список значимых и интересных мест для отдыха.  
+                            Выберите направление, и наш сервис предоставит вам список значимых и интересных мест для отдыха.
                         </div>
                     </div>
                 </div>
                 <div class="mx-0 px-0">
-                    <DirectionElementList></DirectionElementList>
+                    <PlaceElementList :elements="places"></PlaceElementList>
                     <div class="col-12 d-flex justify-content-center">
                         <ButtonOne class="px-4 py-2 fs-5 rounded-pill">Показать еще</ButtonOne>
                     </div>
@@ -82,14 +150,14 @@
                 <div class="col-10 border custom-border-color py-3 py-md-5 px-3 px-md-5">
                     <div class="row">
                         <div class="col-12 col-md-6 fs-1">
-                            Топ популярных<br/>
-                            мест для <br/>
+                            Топ популярных<br />
+                            мест для <br />
                             путешествия
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="row h-100">
                                 <div class="col-12 fs-5 mb-3 d-flex align-self-end fw-light">
-                                    Места избраные людьми
+                                    Места избранные людьми
                                 </div>
                                 <div class="col-12">
                                     <ButtonOne class="px-4 py-2 fs-5 rounded-pill text-nowrap">Узнать больше</ButtonOne>
@@ -105,21 +173,110 @@
 </div>
 </template>
 
+      
+    
 <script>
-import DirectionElementList from "@/components/DirectionElementList"
+import axiosApiInstanceAuth from '../api';
+import PlaceElementList from "@/components/PlaceElementList";
+
 export default {
     components: {
-        DirectionElementList
+        PlaceElementList
     },
+    data() {
+        return {
+            places: [],
+            cities: [],
+            numTransfers: [1, 2, 3],
+            ticketType: ['economy', 'business'],
+            selectedFrom: null,
+            selectedTo: null,
+            selectedMonth: 1, // значение по умолчанию: Январь
+            selectedType: 1, // значение по умолчанию: economy
+            selectedDay: 1, // значение по умолчанию: 1-й день
+            selectedTime: '00:00', // значение по умолчанию: полночь
+            selectedFlightTime: '01:00', // значение по умолчанию: 1 час
+            selectedNumTransfers: 1, // значение по умолчанию: 1 пересадка
+            months: [
+                'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+                'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+            ]
+        };
+    },
+    methods: {
+        async calc() {
+            console.log(this.selectedTo);
+            try {
+                const response = await axiosApiInstanceAuth.get(`http://127.0.0.1:8000/api/directions/${this.selectedTo.id}/places/`);
+                const cityData = response.data;
+                console.log(cityData);
+                this.places = response.data.map((place) => ({
+                    id: place.id,
+                    title: place.title,
+                    photo: place.photo,
+                    description: place.description
+                }));
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        },
+        async fetchCities() {
+            try {
+                const response = await axiosApiInstanceAuth.get(`http://127.0.0.1:8000/api/directions/list/`);
+                const cityData = response.data;
+                console.log(cityData);
+                this.cities = response.data.map((city) => ({
+                    id: city.id,
+                    city: city.city
+                }));
+
+                // Устанавливаем значения по умолчанию после загрузки списка городов
+                if (this.cities.length > 0) {
+                    this.selectedFrom = this.cities[0];
+                    this.selectedTo = this.cities[1] || this.cities[0];
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        }
+    },
+    created() {
+        this.fetchCities();
+    },
+    computed: {
+        daysInMonth() {
+            if (this.selectedMonth === null) {
+                return [];
+            }
+            const days = new Date(2024, this.selectedMonth, 0).getDate(); // 2024 - високосный год для корректного определения февраля
+            return Array.from({ length: days }, (_, i) => i + 1);
+        },
+        formattedDate() {
+            if (this.selectedMonth && this.selectedDay) {
+                return `${String(this.selectedDay).padStart(2, '0')}-${String(this.selectedMonth).padStart(2, '0')}`;
+            }
+            return '';
+        }
+    }
 };
 </script>
-
+    
+    
 <style scoped>
+.form-label,
+.form-select {}
+
+.form-select.red-background,
+.form-control.red-background {
+    background-color: var(--custom-light-background-color) !important;
+}
+
 .hero-glass-col {
     background: var(--custom-light-background-color) !important;
     width: 34px;
     height: 100%;
 }
+
 .hero-glass-windows {
     justify-content: space-between;
     display: flex;
@@ -129,6 +286,7 @@ export default {
     left: 0%;
     right: 0%;
 }
+
 .video-container {
     width: 100%;
     overflow: hidden;
