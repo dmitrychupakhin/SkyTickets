@@ -3,8 +3,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import *
 from .serializers import *
-#from tensorflow import keras
-#import numpy as np
+from tensorflow import keras
+import numpy as np
+import keras.layers
 
 class AllDirectionsAPIView(generics.ListAPIView):
     serializer_class = AllDirSerializer
@@ -25,7 +26,7 @@ class AllDetailDirectionsAPIView(generics.ListAPIView):
 class DirectionPriceAPIView(APIView):
     
     def get(self, request):
-        model_loaded = keras.models.load_model("../../model/modelForEconomy")
+        model_loaded = keras.models.load_model("Avia.h5")
         test = np.array([[-1.28, 1.21, 1.14, -0.98, 0.31, 0.17, 0.19]])
         y_pred = model_loaded.predict(test)
         StdNorm = 3.74

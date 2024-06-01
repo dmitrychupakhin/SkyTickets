@@ -2,7 +2,7 @@
 <div>
     <Announcement></Announcement>
     <Navbar></Navbar>
-    <div class="row mx-0 px-5 my-5">
+    <div class="row mx-0 px-1 px-md-5 my-5">
         <div class="col-12 fs-title fw-light text-center mb-4 custom-title-color">
             Расчет стоимости авиабилета
         </div>
@@ -29,16 +29,16 @@
             </video>
         </div>
     </div>
-    <div class="row mx-0 px-5 my-5" data-aos="fade-up">
+    <div class="row mx-0 px-1 px-md-5 my-5" data-aos="fade-up">
         <div class="col-12 border custom-border-color">
-            <div class="row m-0 p-4">
+            <div class="row m-0 p-1 p-md-4">
                 <div class="col-12 text-center fs-5 fw-light custom-purple-text-color mb-3">Какая будет стоимость?</div>
                 <div class="col-12 text-center fs-2 fw-light custom-title-color mb-3">
                     Современно. Быстро. Точно.
                 </div>
                 <div class="col-12 fs-6 text-center">
                     <div class="row justify-content-center">
-                        <div class="col-8 fw-light">
+                        <div class="col-12 col-md-8 fw-light">
                             Вы не можете уложиться в бюджет? Или просто не хотите продумывать всё до мелочей.
                             Данный сервис сделает это за вас, используя математические алгоритмы. 
                         </div>
@@ -50,7 +50,7 @@
             </div>
         </div>
     </div>
-    <div class="row mx-0 px-5 my-5" data-aos="fade-up">
+    <div class="row mx-0 px-1 px-md-5 my-5" data-aos="fade-up">
         <div class="col-12 px-0">
             <div class="row m-0">
                 <div class="col-12 text-center fs-5 fw-light custom-purple-text-color mb-3">Куда можно сходить?</div>
@@ -59,7 +59,7 @@
                 </div>
                 <div class="col-12 fs-6 text-center mb-5">
                     <div class="row justify-content-center">
-                        <div class="col-8 fw-light">
+                        <div class="col-12 col-md-8 fw-light">
                             Выберите направление, и наш сервис предоставит вам список значимых и интересных мест для отдыха.  
                         </div>
                     </div>
@@ -73,26 +73,26 @@
             </div>
         </div>
     </div>
-    <div class="row mx-0 px-5 py-5 custom-purple-background-color custom-light-text-color">
+    <div class="row mx-0 px-1 px-md-5 py-5 custom-purple-background-color custom-light-text-color">
         <div class="col-12 fs-5 px-0 mb-5 text-center">
             Не знаете куда полететь?
         </div>
         <div class="col-12">
             <div class="row justify-content-center">
-                <div class="col-10 border custom-border-color py-5 px-5">
+                <div class="col-10 border custom-border-color py-3 py-md-5 px-3 px-md-5">
                     <div class="row">
-                        <div class="col-6 fs-1">
+                        <div class="col-12 col-md-6 fs-1">
                             Топ популярных<br/>
                             мест для <br/>
                             путешествия
                         </div>
-                        <div class="col-6">
+                        <div class="col-12 col-md-6">
                             <div class="row h-100">
                                 <div class="col-12 fs-5 mb-3 d-flex align-self-end fw-light">
                                     Места избраные людьми
                                 </div>
                                 <div class="col-12">
-                                    <ButtonOne class="px-4 py-2 fs-5 rounded-pill">Узнать больше</ButtonOne>
+                                    <ButtonOne class="px-4 py-2 fs-5 rounded-pill text-nowrap">Узнать больше</ButtonOne>
                                 </div>
                             </div>
                         </div>

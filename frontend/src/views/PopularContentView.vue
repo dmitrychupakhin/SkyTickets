@@ -2,7 +2,7 @@
 <div>
     <Announcement></Announcement>
     <Navbar></Navbar>
-    <div class="row mx-0 px-5 my-5">
+    <div class="row mx-0 px-1 px-md-5 my-5">
         <div class="col-12 mb-5">
             <div class="col-12 text-center fs-5 fw-light custom-purple-text-color mb-3">А куда же мне полететь?</div>
             <div class="col-12 text-center fs-2 fw-light custom-title-color mb-3">

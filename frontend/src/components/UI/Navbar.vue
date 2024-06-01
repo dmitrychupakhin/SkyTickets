@@ -10,8 +10,8 @@
                 </div>
             </div>
         </router-link>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        <button class="border-0 navbar-toggler" style="background: transparent;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-list border-none fs-1"></i>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -31,9 +31,11 @@
                 </ul>
                 <ul v-if="!token" class="navbar-nav ms-auto col-12 col-xl-auto d-inline-flex">
                     <li class="nav-item mx-0">
-                        <router-link class="custom-nav-link d-flex justify-content-center align-items-center gap-2" :to="{name: 'sign-in'}">
-                            <span class="d-block fs-6 fw-normal">Войти</span>
-                            <i class="bi bi-arrow-up-right fs-6"></i>
+                        <router-link class="custom-nav-link d-flex justify-content-center align-items-center flex-column" :to="{name: 'sign-in'}">
+                            <ButtonTwo class="d-flex gap-2 fs-6 fw-normal px-4 py-2 rounded-pill">
+                                <span class="d-block fs-6 fw-normal">Войти</span>
+                                <i class="bi bi-arrow-up-right fs-6"></i>
+                            </ButtonTwo>
                         </router-link>
                     </li>
                 </ul>

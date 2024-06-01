@@ -1,10 +1,10 @@
 <template>
-<div class="row m-0 px-5 py-5 custom-light-text-color custom-dark-background-color">
+<div class="row m-0 px-1 px-md-5 py-5 custom-light-text-color custom-dark-background-color">
     <div class="col-12 fs-4 py-5">
         Будь первым, за кого всё уже Решено.
     </div>
     <div class="col-12 fs-6 mb-5 pb-2 border-bottom custom-border-color">
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between flex-wrap">
             <div class="py-3">Клиент: “не заставляйте меня думать...”</div>
             <div class="d-flex gap-2 align-items-center">
                 <label for="inp_email" class="inp mb-2 w-100">
@@ -18,7 +18,7 @@
     </div>
     <div class="col-12">
         <div class="row justify-content-center">
-            <div class="col-4 d-flex justify-content-center align-items-center gap-3">
+            <div class="col-4 d-flex flex-wrap justify-content-center align-items-center gap-3">
                 <img class="d-flex justify-content-center align-items-center" :src="require('@/assets/logo.svg')">
                 <div class="fs-title fw-normal">
                     <div class="gradient-text fw-semibold">SkyTickets</div>
