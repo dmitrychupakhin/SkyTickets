@@ -75,7 +75,7 @@ class AddFavoriteAPIView(APIView):
                 user = User.objects.get(id=user_id),
                 place = PopularPlace.objects.get(id=request.data['place_id'])
             )
-            return Response(model_to_dict(FavoritePlace))
+            return Response({'message': 'OK'}, status=status.HTTP_200_OK)
         else:
             return None
     
