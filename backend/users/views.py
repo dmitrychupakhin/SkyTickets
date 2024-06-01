@@ -77,7 +77,7 @@ class AddFavoriteAPIView(APIView):
             )
             return Response({'message': 'OK'}, status=status.HTTP_200_OK)
         else:
-            return None
+            return Response({'message': 'NO'}, status=status.HTTP_200_OK)
     
 class DelFavoriteAPIView(APIView):
     permission_classes = [IsAuthenticated]
