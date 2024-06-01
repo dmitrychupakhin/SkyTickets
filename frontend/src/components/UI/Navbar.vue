@@ -31,7 +31,7 @@
                 </ul>
                 <ul v-if="!token" class="navbar-nav ms-auto col-12 col-xl-auto d-inline-flex">
                     <li class="nav-item mx-0">
-                        <router-link class="custom-nav-link d-flex justify-content-center align-items-center gap-2" :to="{name: 'home'}">
+                        <router-link class="custom-nav-link d-flex justify-content-center align-items-center gap-2" :to="{name: 'sign-in'}">
                             <span class="d-block fs-6 fw-normal">Войти</span>
                             <i class="bi bi-arrow-up-right fs-6"></i>
                         </router-link>

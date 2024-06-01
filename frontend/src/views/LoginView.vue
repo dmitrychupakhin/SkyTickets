@@ -1,4 +1,5 @@
 <template>
+  <div>
     <Navbar></Navbar>
     <div class="row justify-content-center align-items-center mx-1 mx-md-5" style="min-height: 90vh;">
         <div class="d-flex flex-column shadow rounded p-4 text-center align-items-center my-3" style="width: min-content;">
@@ -42,6 +43,8 @@
             </div>
         </div>
     </div>
+    <Footer></Footer>
+  </div>
 </template>
 
 <script setup>
