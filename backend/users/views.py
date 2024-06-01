@@ -9,6 +9,7 @@ from .models import *
 from .serializers import *
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import exceptions
+from directions.models import *
 
 class RegistrationAPIView(generics.CreateAPIView):
     serializer_class = UserSerializer
@@ -68,11 +69,11 @@ class EditProfileAPIView(generics.UpdateAPIView):
 class AddFavoriteAPIView(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request):
-        user_id = self.kwargs['user_id']
+        user_id = request.data['user_id']
         if user_id == self.request.user.id:
             FavoritePlace = favorite_places.objects.create(
                 user = User.objects.get(id=user_id),
-                place = PopularPlace.object.get(id=request.data['place_id'])
+                place = PopularPlace.objects.get(id=request.data['place_id'])
             )
             return Response(model_to_dict(FavoritePlace))
         else:
@@ -89,3 +90,29 @@ class DelFavoriteAPIView(APIView):
             return Response({'message': 'Удалено из избранных.'}, status=status.HTTP_200_OK)
         else:
             return None
+        
+class  GetUserFavoriteAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request, id):
+        user_id = id
+        if user_id == self.request.user.id:
+            queryset = favorite_places.objects.filter(user_id=user_id)
+            data = []
+            for obj in queryset:
+                place = PopularPlace.objects.get(id=obj.place.id)
+                if(place.photo):
+                    place_p = place.photo
+                else:
+                    place_p = None
+                temp_place = {
+                    'title': place.title,
+                    'photo': place_p,
+                    'description': place.description,
+                    'city': place.city.city
+                }
+                data.append(temp_place)
+            print(data)
+            return Response(data)
+            
+            

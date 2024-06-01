@@ -14,6 +14,7 @@ urlpatterns = [
     path('addfavorite/', AddFavoriteAPIView.as_view()),
     path('delfavorite/', DelFavoriteAPIView.as_view()),
     path('register/', RegistrationAPIView.as_view()),
+    path('<int:id>/favorites/', GetUserFavoriteAPIView.as_view()),
     path('<int:id>/', GetUserByIDAPIView.as_view()),
     path('<int:pk>/edit/', EditProfileAPIView.as_view()),
     path('token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
