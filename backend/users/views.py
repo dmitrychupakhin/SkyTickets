@@ -69,17 +69,12 @@ class EditProfileAPIView(generics.UpdateAPIView):
 class AddFavoriteAPIView(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request):
-        user_id = request.data['user_id']
-        print(user_id)
-        print(self.request.user.id)
-        if user_id == self.request.user.id:
-            FavoritePlace = favorite_places.objects.create(
-                user = User.objects.get(id=user_id),
-                place = PopularPlace.objects.get(id=request.data['place_id'])
-            )
-            return Response({'message': 'OK'}, status=status.HTTP_200_OK)
-        else:
-            return Response({'message': 'NO'}, status=status.HTTP_200_OK)
+        user_id = self.request.user.id
+        FavoritePlace = favorite_places.objects.create(
+            user = User.objects.get(id=user_id),
+            place = PopularPlace.objects.get(id=request.data['place_id'])
+        )
+        return Response({'message': 'OK'}, status=status.HTTP_200_OK)
     
 class DelFavoriteAPIView(APIView):
     permission_classes = [IsAuthenticated]
