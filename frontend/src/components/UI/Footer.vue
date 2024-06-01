@@ -21,7 +21,7 @@
             <div class="col-4 d-flex justify-content-center align-items-center gap-3">
                 <img class="d-flex justify-content-center align-items-center" :src="require('@/assets/logo.svg')">
                 <div class="fs-title fw-normal">
-                    <div class="gradient-text fw-semibold">AirTickets</div>
+                    <div class="gradient-text fw-semibold">SkyTickets</div>
                 </div>
             </div>  
         </div>  

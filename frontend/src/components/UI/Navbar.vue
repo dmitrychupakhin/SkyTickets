@@ -6,7 +6,7 @@
             <div class="d-flex gap-3 align-items-center">
                 <img class="d-flex justify-content-center align-items-center" style="width: 70px;" :src="require('@/assets/logo.svg')">
                 <div class="fs-3 fw-normal">
-                    <div class="gradient-text fw-semibold">AirTickets</div>
+                    <div class="gradient-text fw-semibold">SkyTickets</div>
                 </div>
             </div>
         </router-link>
