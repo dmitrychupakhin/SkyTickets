@@ -4,7 +4,7 @@
     <div class="row justify-content-center align-items-center mx-1 mx-md-5" style="min-height: 90vh;">
         <div class="d-flex flex-column shadow rounded p-4 text-center align-items-center my-3" style="width: min-content;">
             <div class="d-flex justify-content-center align-items-center mb-2 mt-5" style="width: 300px;">
-                <i class="bi bi-app-indicator fs-2"></i>
+              <img class="d-flex justify-content-center align-items-center" style="width: 70px;" :src="require('@/assets/logo.svg')">
             </div>
             <div class="fs-4 text-nowrap mb-3">Добро пожаловать!</div>
             <div v-if="authStore.error.general" class="error-message custom-error-text-color mb-2">
