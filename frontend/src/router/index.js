@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import PopularContentView from '../views/PopularContentView.vue'
 /* import ProfileView from '../views/ProfileView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
@@ -15,6 +16,14 @@ const routes = [
     path: '/',
     name: 'home',
     component: HomeView,
+    meta: {
+      auth: false
+    }
+  },
+  {
+    path: '/polular/',
+    name: 'popular',
+    component: PopularContentView,
     meta: {
       auth: false
     }
@@ -57,14 +66,6 @@ const routes = [
     component: ResetPasswordView,
     meta: {
       auth: false
-    }
-  },
-  {
-    path: '/content/',
-    name: 'content1',
-    component: ContentPageView,
-    meta: {
-      auth: true
     }
   },
   {

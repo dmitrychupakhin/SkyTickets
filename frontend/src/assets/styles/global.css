@@ -1,12 +1,12 @@
 :root {
-    --custom-title-color: rgb(33, 33, 38);
-    --custom-description-color: rgb(49,48,64);
+    --custom-title-color: #1C1E26;
+    --custom-description-color: #21232c;
 
     --custom-light-background-color: rgb(253, 252,255);
     
-    --custom-dark-background-color: rgb(42, 41, 51);
-    --custom-dark-background-color-hover: rgb(52, 51, 63);
-    --custom-dark-background-color-active: rgb(42, 41, 51);
+    --custom-dark-background-color: #21232c;
+    --custom-dark-background-color-hover: #292c38;
+    --custom-dark-background-color-active: #21232c;
 
     --custom-green-color: rgb(83, 95, 87);
     --custom-blue-color: rgb(58, 57, 70);
@@ -14,7 +14,7 @@
     --custom-purple-color-active: rgb(143, 111, 212);
 
     --custom-light-text-color: rgb(253, 252,255);
-    --custom-dark-text-color: rgb(42, 41, 51);
+    --custom-dark-text-color: #21232c;
 
     --custom-border-color: rgb(219, 228, 229);
     --custom-error-text-color: #954545;

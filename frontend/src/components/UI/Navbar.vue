@@ -20,7 +20,7 @@
                     <router-link :to="{name: 'home'}" class="custom-nav-link mx-3 fw-normal" href="#" aria-current="page">Главная страница</router-link>
                 </li>
                 <li class="nav-item me-4">
-                    <router-link :to="{name: 'home'}" class="custom-nav-link mx-3 fw-normal" href="#" aria-current="page">Популярные направления</router-link>
+                    <router-link :to="{name: 'popular'}" class="custom-nav-link mx-3 fw-normal" href="#" aria-current="page">Популярные направления</router-link>
                 </li>
                 <ul v-if="token" class="navbar-nav ms-auto col-12 col-xl-auto d-inline-flex">
                     <li class="nav-item mx-0">

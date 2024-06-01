@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="col-12">
+    <div class="col-12" style="overflow-x: hidden;">
         <DirectionElement class="mb-5 pb-3" v-for="(element, index) in elements" :key="element.id" :element="element" :isReverse="isOdd(index)" />
     </div>
 </div>

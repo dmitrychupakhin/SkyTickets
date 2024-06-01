@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid overflow-hidden">
+  <div class="container-fluid">
     <div class="app">
       <router-view></router-view>
     </div>

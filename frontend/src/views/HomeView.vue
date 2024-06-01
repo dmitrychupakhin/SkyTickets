@@ -1,5 +1,6 @@
 <template>
 <div>
+    <Announcement></Announcement>
     <Navbar></Navbar>
     <div class="row mx-0 px-5 my-5">
         <div class="col-12 fs-title fw-light text-center mb-4 custom-title-color">
