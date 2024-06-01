@@ -49,6 +49,14 @@ class AllDetailDirectionsAPIView(generics.ListAPIView):
     serializer_class = AllDetailDirSerializer
     queryset = Direction.objects.all()
     
+class DirectionByIdAPIView(generics.RetrieveAPIView):
+    serializer_class = AllDetailDirSerializer
+    queryset = Direction.objects.all()
+    
+    def get_object(self):
+        direction_id = self.kwargs['pk']
+        return Direction.objects.get(id=direction_id)
+        
 class DirectionPriceAPIView(APIView):
     
     def post(self, request):
