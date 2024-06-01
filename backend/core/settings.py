@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     #external
     'rest_framework',
     'django_rest_passwordreset',
+    'drf_yasg',
     #internal
     'users',
     'directions',
