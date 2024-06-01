@@ -6,4 +6,5 @@ urlpatterns = [
     path('popular/', AllDetailDirectionsAPIView.as_view()),
     path('<int:pk>/places/', PopularPlacesAPIView.as_view()),
     path('price/', DirectionPriceAPIView.as_view()),
+    path('facts/', FactsAPIView.as_view()),
 ] 

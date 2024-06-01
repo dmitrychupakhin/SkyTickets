@@ -7,6 +7,7 @@ from tensorflow import keras
 import numpy as np
 from rest_framework import status
 import os
+import g4f
 
 class AllDirectionsAPIView(generics.ListAPIView):
     serializer_class = AllDirSerializer
@@ -76,3 +77,37 @@ class DirectionPriceAPIView(APIView):
                 if 1200 < y_pred[0][0]* StdNorm + MeanNorm < 25_000:
                     result += [airline[plane] + ": " + str(y_pred[0][0] * StdNorm + MeanNorm)]
         return Response({'result': result}, status=status.HTTP_200_OK)
+    
+class FactsAPIView(APIView):
+    
+    def post(self, request):
+        direction = Direction.objects.get(id=request.data['direction'])
+        badSymbolsForResponse = ['当', '前', '地', '区', '当', '日', '额', '度', '已', '消', '耗', '完', '请', '尝', '试', '更', '换', '网', '络', '环', '境']
+        InputMessage = f"Напиши 4 небольших факта о городе {direction} в Индии. Ответ выдавай в таком формате по с разделителем |, вот так:  тема факта 1|первый факт|тема факта 2|второй факт и тд"
+        messages = [{"role": "user", "content": InputMessage}]
+        OK = -1
+        while OK != 1:
+            try:
+                StringResponse = gpt(messages)
+                if not(any(badSymbol in StringResponse for badSymbol in badSymbolsForResponse)):
+                    OK = 1
+            except:
+                pass
+        lines = StringResponse.split('|')
+        facts_dict = {}
+        for i in range(0, len(lines), 2):
+            key = lines[i]
+            if i+1 < len(lines):
+                facts_dict[key] = lines[i+1]
+        return Response(facts_dict, status=status.HTTP_200_OK)
+        
+def gpt(messages):
+    response = g4f.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=messages,
+            stream=True,
+        )
+    StringResponse = ''
+    for message in response:
+        StringResponse += message
+    return StringResponse
