@@ -34,30 +34,8 @@ class DirectionPriceAPIView(APIView):
         directionto = Direction.objects.get(id=request.data['to'])
         fr = directionfrom.city
         to = directionto.city
-        if (fr == "Мумбаи"):
-            fr = "Mumbai"
-        if (to == "Мумбаи"):
-            to = "Mumbai"
-        if (fr == "Дели"):
-            fr = "Delhi"
-        if (to == "Дели"):
-            to = "Delhi"
-        if (fr == "Калькутта"):
-            fr = "Kolkata"
-        if (to == "Калькутта"):
-            to = "Kolkata"
-        if (fr == "Хайдарабад"):
-            fr = "Hyderabad"
-        if (to == "Хайдарабад"):
-            to = "Hyderabad"
-        if (fr == "Ченнаи"):
-            fr = "Chennai"
-        if (to == "Ченнаи"):
-            to = "Chennai"
-        if (fr == "Бангалор"):
-            fr = "Bangalore"
-        if (to == "Бангалор"):
-            to = "Bangalore"
+        fr = fr.replace('Мумбаи', 'Mumbai').replace('Дели','Delhi').replace('Калькутта', 'Kolkata').replace('Хайдарабад', 'Hyderabad').replace('Ченнаи', 'Chennai').replace('Бангалор', 'Bangalore')
+        to = fr.replace('Мумбаи', 'Mumbai').replace('Дели','Delhi').replace('Калькутта', 'Kolkata').replace('Хайдарабад', 'Hyderabad').replace('Ченнаи', 'Chennai').replace('Бангалор', 'Bangalore')
         # date / dep_time / from / to / clas / time_taken / stop -> str
         #response = ["12-03", "09:00", "Mumbai", "Delhi", "economy", "10h 50m", "0"]
         response = [request.data['date'], request.data['dep_time'], fr, to, request.data['clas'], request.data['time_taken'], request.data['stop']]
