@@ -70,6 +70,8 @@ class AddFavoriteAPIView(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request):
         user_id = request.data['user_id']
+        print(user_id)
+        print(self.request.user.id)
         if user_id == self.request.user.id:
             FavoritePlace = favorite_places.objects.create(
                 user = User.objects.get(id=user_id),
