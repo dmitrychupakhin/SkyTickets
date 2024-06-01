@@ -125,12 +125,14 @@ class FactsAPIView(APIView):
                     OK = 1
             except:
                 pass
+        print(StringResponse)
         lines = StringResponse.split('|')
         facts_dict = {}
         for i in range(0, len(lines), 2):
             key = lines[i]
             if i+1 < len(lines):
                 facts_dict[key] = lines[i+1]
+        print(facts_dict)
         return Response(facts_dict, status=status.HTTP_200_OK)
         
 def gpt(messages):
