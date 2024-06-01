@@ -79,14 +79,11 @@ class AddFavoriteAPIView(APIView):
 class DelFavoriteAPIView(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request):
-        user_id = request.data['user_id']
-        if user_id == self.request.user.id:
-            place_id = request.data['place_id']
-            favorite_place = get_object_or_404(favorite_places, user=user_id, place=place_id)
-            favorite_place.delete()
-            return Response({'message': 'Удалено из избранных.'}, status=status.HTTP_200_OK)
-        else:
-            return None
+        user_id = self.request.user.id
+        place_id = request.data['place_id']
+        favorite_place = get_object_or_404(favorite_places, user=user_id, place=place_id)
+        favorite_place.delete()
+        return Response({'message': 'Удалено из избранных.'}, status=status.HTTP_200_OK)
         
 class  GetUserFavoriteAPIView(APIView):
     permission_classes = [IsAuthenticated]
