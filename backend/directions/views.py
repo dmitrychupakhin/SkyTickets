@@ -8,18 +8,42 @@ import numpy as np
 from rest_framework import status
 import os
 import g4f
+from django.core import serializers
+from users.models import *
 
 class AllDirectionsAPIView(generics.ListAPIView):
     serializer_class = AllDirSerializer
     queryset = Direction.objects.all()
     
-class PopularPlacesAPIView(generics.ListAPIView):
-    serializer_class = PlaceSerializer
-    queryset = PopularPlace.objects.all()
+class PopularPlacesAPIView(APIView):
     
-    def get_queryset(self):
-        city_id = self.kwargs['pk']
-        return PopularPlace.objects.filter(city=city_id)
+    def get(self, request, pk):
+        city_id = pk
+        if request.user.is_authenticated:
+            places = favorite_places.objects.filter(user_id=request.user.id)
+            resp = []
+            queryset = PopularPlace.objects.filter(city=city_id)
+            for obj in queryset:
+                if(obj.photo):
+                    obj_p = obj.photo
+                else:
+                    obj_p = None
+                temp = {}
+                temp['title'] = obj.title
+                temp['photo'] = obj_p
+                temp['city'] = obj.city.city
+                temp['description'] = obj.description
+                temp['saved'] = '0'
+                for obj2 in places:
+                    if(obj2.place_id == obj.id):
+                        temp['saved'] = '1'
+                        break
+                resp.append(temp)
+            return Response(resp, status=status.HTTP_200_OK)
+        else:
+            queryset = PopularPlace.objects.filter(city=city_id)
+            serializer = PlaceSerializer(queryset, many=True)
+            return Response(serializer.data)
     
 class AllDetailDirectionsAPIView(generics.ListAPIView):
     serializer_class = AllDetailDirSerializer
