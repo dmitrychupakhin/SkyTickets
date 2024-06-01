@@ -20,7 +20,7 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('api/admin/', admin.site.urls),
     path('api/users/', include('users.urls')),
     path('api/directions/', include('directions.urls')),
     path('api/swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
