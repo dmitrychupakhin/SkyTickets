@@ -10,6 +10,8 @@ from .serializers import *
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import exceptions
 from directions.models import *
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 class RegistrationAPIView(generics.CreateAPIView):
     serializer_class = UserSerializer
@@ -41,12 +43,15 @@ class ChangePasswordAPIView(APIView):
                 return Response({'error': 'Некорректный старый пароль.'}, status=status.HTTP_400_BAD_REQUEST)
             return Response({'error': 'Пароли не совпадают.'}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
 class GetUserByIDAPIView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ProfileSerializer
     queryset = User.objects.all()
     
+    @swagger_auto_schema(
+        operation_description="Получение данных для личного кабинета пользователя",
+    )
     def get_object(self):
         user_id = self.kwargs['id']
         if user_id == self.request.user.id:
@@ -58,7 +63,9 @@ class EditProfileAPIView(generics.UpdateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ProfileSerializer
     queryset = User.objects.all()
-    
+    @swagger_auto_schema(
+        operation_description="Редактирование профиля",
+    )
     def get_queryset(self):
         user_id = self.kwargs['pk']
         if user_id == self.request.user.id:
@@ -68,6 +75,19 @@ class EditProfileAPIView(generics.UpdateAPIView):
         
 class AddFavoriteAPIView(APIView):
     permission_classes = [IsAuthenticated]
+    @swagger_auto_schema(
+        operation_description="Добавление в избранные места пользователя",
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'place_id': openapi.Schema(
+                    type=openapi.TYPE_INTEGER,
+                    description='ID места, которое нужно добавить в избранные'
+                )
+            }
+        ),
+        responses={200: 'OK'}
+    )
     def post(self, request):
         user_id = self.request.user.id
         FavoritePlace = favorite_places.objects.create(
@@ -78,7 +98,21 @@ class AddFavoriteAPIView(APIView):
     
 class DelFavoriteAPIView(APIView):
     permission_classes = [IsAuthenticated]
+    @swagger_auto_schema(
+        operation_description="Удаление из избранных мест пользователя",
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'place_id': openapi.Schema(
+                    type=openapi.TYPE_INTEGER,
+                    description='ID места, которое нужно удалить из избранных'
+                )
+            }
+        ),
+        responses={200: 'Удалено из избранных.'}
+    )
     def post(self, request):
+        
         user_id = self.request.user.id
         place_id = request.data['place_id']
         favorite_place = get_object_or_404(favorite_places, user=user_id, place=place_id)
@@ -87,7 +121,9 @@ class DelFavoriteAPIView(APIView):
         
 class  GetUserFavoriteAPIView(APIView):
     permission_classes = [IsAuthenticated]
-    
+    @swagger_auto_schema(
+        operation_description="Получение всех избранных мест пользователя по id",
+    )
     def get(self, request, id):
         user_id = id
         if user_id == self.request.user.id:
@@ -104,8 +140,7 @@ class  GetUserFavoriteAPIView(APIView):
                     'title': place.title,
                     'photo': place_p,
                     'description': place.description,
-                    'city': place.city.city,
-                    'saved': 1
+                    'city': place.city.city
                 }
                 data.append(temp_place)
             print(data)

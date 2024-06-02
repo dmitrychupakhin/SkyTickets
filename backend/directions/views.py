@@ -12,6 +12,7 @@ from django.core import serializers
 from rest_framework.pagination import PageNumberPagination
 from users.models import *
 from rest_framework.permissions import AllowAny
+from drf_yasg.utils import swagger_auto_schema
 
 class AllDirectionsAPIView(generics.ListAPIView):
     permission_classes = [AllowAny]
@@ -21,6 +22,9 @@ class AllDirectionsAPIView(generics.ListAPIView):
     
 class PopularPlacesAPIView(APIView):
     
+    @swagger_auto_schema(
+        operation_description="Получение популярных мест направления",
+    )
     def get(self, request, pk):
         city_id = pk
         if request.user.is_authenticated:
@@ -77,7 +81,7 @@ class DirectionByIdAPIView(generics.RetrieveAPIView):
 class DirectionPriceAPIView(APIView):
     
     def post(self, request):
-        #print(request.data)
+        
         directionfrom = Direction.objects.get(id=request.data['from'])
         directionto = Direction.objects.get(id=request.data['to'])
         fr = directionfrom.city
@@ -125,9 +129,8 @@ class DirectionPriceAPIView(APIView):
                 test = np.array([rightData])
                 y_pred = model.predict(test)
                 y_pred = [i for i in y_pred]
-                print(y_pred[0][0])
                 if 1200 < y_pred[0][0] < 25_000:
-                    result += [[airline[plane], y_pred[0][0]]]
+                    result += [airline[plane] + ": " + str(y_pred[0][0])]
 
         return Response({'result': result}, status=status.HTTP_200_OK)
     

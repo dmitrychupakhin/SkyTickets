@@ -181,8 +181,8 @@ AUTH_USER_MODEL = 'users.User'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = "pikalovshop@yandex.ru"
-EMAIL_HOST_PASSWORD = "klwkznkczghybirk"
+EMAIL_HOST_USER = "SkyTickets@yandex.ru"
+EMAIL_HOST_PASSWORD = "bkfqmzncbvdyjmax"
 EMAIL_USE_SSL = True
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
