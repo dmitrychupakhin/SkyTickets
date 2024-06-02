@@ -34,7 +34,7 @@ def password_reser_token_created(reset_password_token, *args, **kwargs):
     full_link = ful_link,
     recipient_email = reset_password_token.user.email
     
-    sender_email = "pikalovshop@yandex.ru"
+    sender_email = "SkyTickets@yandex.ru"
     subject = "Запрос на сброс пароля"
     message = f"Сброс пароля: {reset_password_token.key}"
     send_mail(subject, message, sender_email, [recipient_email])
