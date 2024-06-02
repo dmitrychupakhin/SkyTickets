@@ -23,8 +23,8 @@
                             <div class="bi bi-pencil fs-4"></div>
                         </button>
                     </div>
-                    <div class="col-12 text-center fs-5 fw-light mb-2">@{{ username }}</div>
-                    <div class="col-12 z-3 w-auto fw-light flex-column flex-md-row d-flex gap-4">
+                    <div class="col-12 text-center fs-5 fw-light mb-3">@{{ username }}</div>
+                    <div class="col-12 z-3 w-auto fw-light flex-column flex-md-row d-flex gap-4 mb-2">
                         <div class="d-flex gap-2 mb-1 z-3 w-auto text-nowrap">
                             <div><i class="bi bi-telephone"></i></div>
                             <div>{{ phone }}</div>
@@ -42,6 +42,9 @@
                             <div>{{ location }}</div>
                         </div>
                     </div>
+                    <router-link :to="{name: 'edit-password'}" class="col-12 fw-lighter text-center custom-dark-text-color text-decoration-none">
+                        Поменять пароль?
+                    </router-link>
                     <div class="col-12 p-4">
                         <div class="position-relative h-100 d-flex flex-column justify-content-center">
                             <div class="d-flex align-items-end justify-content-center">

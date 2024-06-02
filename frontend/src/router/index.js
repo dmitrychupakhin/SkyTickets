@@ -7,6 +7,7 @@ import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import ResetPasswordView from '../views/ResetPasswordView.vue'
 import ProfileEditView from '../views/ProfileEditPage.vue'
+import ProfileEditPasswordView from '../views/ProfileEditPasswordView.vue'
 import { useAuthStore } from '../store/auth'
 import { computed, nextTick } from 'vue';
 
@@ -72,6 +73,14 @@ const routes = [
     name: 'reset-password',
     component: ResetPasswordView,
     meta: {
+      auth: false
+    }
+  },
+  {
+    path: '/edit-password',
+    name: 'edit-password',
+    component: ProfileEditPasswordView,
+    meta:{
       auth: false
     }
   },
