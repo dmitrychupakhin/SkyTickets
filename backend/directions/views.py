@@ -9,6 +9,7 @@ from rest_framework import status
 import os
 import g4f
 from django.core import serializers
+from rest_framework.pagination import PageNumberPagination
 from users.models import *
 
 class AllDirectionsAPIView(generics.ListAPIView):
@@ -45,9 +46,15 @@ class PopularPlacesAPIView(APIView):
             serializer = PlaceSerializer(queryset, many=True)
             return Response(serializer.data)
     
+class AllDetailDirectionsPagination(PageNumberPagination):
+    page_size = 3
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
+    
 class AllDetailDirectionsAPIView(generics.ListAPIView):
     serializer_class = AllDetailDirSerializer
     queryset = Direction.objects.all()
+    pagination_class = AllDetailDirectionsPagination
     
 class DirectionByIdAPIView(generics.RetrieveAPIView):
     serializer_class = AllDetailDirSerializer
