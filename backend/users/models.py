@@ -9,9 +9,9 @@ from directions.models import *
 class User(AbstractUser):
     photo = models.ImageField(upload_to="users", blank=True, null=True, verbose_name='Фотография', default='users/none.jpg')
     email = models.EmailField(blank=False, unique=True)
-    phone_number = models.CharField(blank=True, null=True, max_length=20)
-    date_birth = models.DateField(blank=True, null=True)
-    location = models.CharField(blank=True, null=True, max_length=40)
+    phone_number = models.CharField(blank=True, null=True, max_length=20, default='Номер телефона')
+    date_birth = models.DateField(blank=True, null=True, auto_now_add=True)
+    location = models.CharField(blank=True, null=True, max_length=40, default='Местоположение')
     
     def save(self, *args, **kwargs):
         if not self.is_superuser and not self.pk:
