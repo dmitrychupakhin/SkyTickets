@@ -96,10 +96,11 @@ class  GetUserFavoriteAPIView(APIView):
             for obj in queryset:
                 place = PopularPlace.objects.get(id=obj.place.id)
                 if(place.photo):
-                    place_p = place.photo.url
+                    place_p = "http://127.0.0.1:8000"+place.photo.url
                 else:
                     place_p = None
                 temp_place = {
+                    'id': place.id,
                     'title': place.title,
                     'photo': place_p,
                     'description': place.description,
