@@ -29,7 +29,7 @@ class PopularPlacesAPIView(APIView):
             queryset = PopularPlace.objects.filter(city=city_id)
             for obj in queryset:
                 if(obj.photo):
-                    obj_p = "http://127.0.0.1:8000"+obj.photo
+                    obj_p = "http://127.0.0.1:8000"+obj.photo.url
                 else:
                     obj_p = None
                 temp = {}
