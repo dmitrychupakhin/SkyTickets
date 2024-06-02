@@ -86,9 +86,9 @@ const router = createRouter({
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
-    return savedPosition;
+      return { ...savedPosition, behavior: 'auto' }; // Исправлено здесь
     } else {
-    return { top: 0 };
+      return { top: 0, behavior: 'auto' };
     }
 }
 })

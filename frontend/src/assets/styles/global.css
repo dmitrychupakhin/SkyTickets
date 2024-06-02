@@ -78,3 +78,6 @@ body {
     color: var(--custom-dark-text-color) !important;
 }
 
+html {
+    scroll-behavior:auto!important;
+  }
