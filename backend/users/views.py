@@ -96,7 +96,7 @@ class  GetUserFavoriteAPIView(APIView):
             for obj in queryset:
                 place = PopularPlace.objects.get(id=obj.place.id)
                 if(place.photo):
-                    place_p = place.photo
+                    place_p = place.photo.url
                 else:
                     place_p = None
                 temp_place = {
