@@ -126,6 +126,7 @@ class FactsAPIView(APIView):
             except:
                 pass
         print(StringResponse)
+        StringResponse.replace("\n\n", "|")
         lines = StringResponse.split('|')
         facts_dict = {}
         for i in range(0, len(lines), 2):
