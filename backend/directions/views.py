@@ -33,6 +33,7 @@ class PopularPlacesAPIView(APIView):
                 else:
                     obj_p = None
                 temp = {}
+                temp['id'] = obj.id
                 temp['title'] = obj.title
                 temp['photo'] = obj_p
                 temp['city'] = obj.city.city
