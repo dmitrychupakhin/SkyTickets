@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import axiosApiInstanceAuth from '../api';
+import axios from 'axios';
 import DirectionElementList from "@/components/DirectionElementList"
 export default {
     components: {
@@ -47,7 +47,7 @@ export default {
     methods: {
         async fetchCities() {
             try {
-                const response = await axiosApiInstanceAuth.get(`http://127.0.0.1:8000/api/directions/popular/?page=${this.page}`);
+                const response = await axios.get(`http://127.0.0.1:8000/api/directions/popular/?page=${this.page}&page_size_query_param=1`);
                 const cityData = response.data;
                 console.log(cityData);
                 this.cities = response.data.results.map((city, index) => ({

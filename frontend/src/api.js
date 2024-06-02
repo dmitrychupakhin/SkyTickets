@@ -6,6 +6,7 @@ const axiosApiInstanceAuth = axios.create()
 
 axiosApiInstanceAuth.interceptors.request.use((config) => {
   const url = config.url
+  console.log(url);
   if (!url.includes('token') && !url.includes('register')) {
     const authStore = useAuthStore()
     config.headers = {

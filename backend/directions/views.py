@@ -69,7 +69,7 @@ class DirectionByIdAPIView(generics.RetrieveAPIView):
 class DirectionPriceAPIView(APIView):
     
     def post(self, request):
-        
+        #print(request.data)
         directionfrom = Direction.objects.get(id=request.data['from'])
         directionto = Direction.objects.get(id=request.data['to'])
         fr = directionfrom.city
@@ -117,8 +117,9 @@ class DirectionPriceAPIView(APIView):
                 test = np.array([rightData])
                 y_pred = model.predict(test)
                 y_pred = [i for i in y_pred]
+                print(y_pred[0][0])
                 if 1200 < y_pred[0][0] < 25_000:
-                    result += [airline[plane] + ": " + str(y_pred[0][0])]
+                    result += [[airline[plane], y_pred[0][0]]]
 
         return Response({'result': result}, status=status.HTTP_200_OK)
     

@@ -108,7 +108,7 @@
                         <ButtonOne class="px-4 py-2 fs-5 rounded-pill" @click="calc">Рассчитать</ButtonOne>
                     </div>
                 </div>
-                <div v-if="isCalcLoading"  class="col-12 col-md-6 p-4 rounded-3 pt-5">
+                <div v-if="isCalcLoading" class="col-12 col-md-6 p-4 rounded-3 pt-5">
                     <div class="row justify-content-center mx-0 mb-4">
                         <div class="spinner-border" style="color: var(--custom-purple-color);" role="status">
                             <span class="visually-hidden">Loading...</span>
@@ -142,7 +142,7 @@
                     </div>
                 </div>
                 <div v-else class="col-12 col-md-6 p-4 rounded-3 pt-5">
-                    
+
                 </div>
             </div>
         </div>
@@ -203,8 +203,11 @@
 </template>
 
 <script>
-import axiosApiInstanceAuth from '../api';
+import axios from 'axios';
 import PlaceElementList from "@/components/PlaceElementList";
+import { computed } from 'vue';
+import { useAuthStore } from '@/store/auth'; // Adjust the path as necessary
+import axiosApiInstanceAuth from '../api';
 
 export default {
     components: {
@@ -216,7 +219,7 @@ export default {
             isCalcLoading: false,
             places: [],
             cities: [],
-            numTransfers: [1, 2, 3],
+            numTransfers: [0, 1, 2],
             ticketType: ['economy', 'business'],
             selectedFrom: null,
             selectedTo: null,
@@ -239,23 +242,21 @@ export default {
         },
         async calc() {
             this.isCalcLoading = true;
-            console.log(this.selectedTo);
             try {
                 const flightTimeParts = this.selectedFlightTime.split(':');
                 const formattedFlightTime = `${flightTimeParts[0]}h ${flightTimeParts[1]}m`;
-                const response = await axiosApiInstanceAuth.post(`http://127.0.0.1:8000/api/directions/price/`, {
+
+                const response = await axios.post(`http://127.0.0.1:8000/api/directions/price/`, {
                     from: this.selectedFrom.id,
                     to: this.selectedTo.id,
-                    date: this.selectedMonth.toString().padStart(2, '0') + '-' + this.selectedDay.toString().padStart(2, '0'),
+                    date: this.selectedDay.toString().padStart(2, '0') + '-' + this.selectedMonth.toString().padStart(2, '0'),
                     dep_time: this.selectedTime,
-                    clas: this.selectedType,
-                    stop: this.selectedNumTransfers,
+                    clas: this.ticketType[this.selectedType - 1],
+                    stop: this.selectedNumTransfers.toString(),
                     time_taken: formattedFlightTime
                 });
 
                 const responseData = response.data;
-                console.log(responseData);
-
                 if (responseData && responseData.result && Array.isArray(responseData.result)) {
                     this.calcResults = responseData.result.map((place) => ({
                         title: place[0],
@@ -265,23 +266,37 @@ export default {
                     this.isCalced = true;
                 } else {
                     console.error('Invalid response format');
+                    this.isCalcLoading = false;
                 }
             } catch (error) {
-                console.error('Error fetching user data:', error);
+                console.error('Error fetching calculation data:', error);
+                this.isCalcLoading = false;
             }
+
             try {
-                const response = await axiosApiInstanceAuth.get(`http://127.0.0.1:8000/api/directions/${this.selectedTo.id}/places/`);
-                const cityData = response.data;
-                console.log(cityData);
-                console.log("123");
-                this.places = response.data.map((place) => ({
-                    id: place.id,
-                    title: place.title,
-                    photo: place.photo,
-                    description: place.description
-                }));
+                const authStore = useAuthStore();
+                if (!(computed(() => authStore.userInfo.token).value)) {
+                    const response = await axios.get(`http://127.0.0.1:8000/api/directions/${this.selectedTo.id}/places`);
+                    const cityData = response.data;
+                    this.places = cityData.map((place) => ({
+                        id: place.id,
+                        title: place.title,
+                        photo: place.photo,
+                        description: place.description
+                    }));
+                }
+                else{
+                    const response = await axiosApiInstanceAuth.get(`http://127.0.0.1:8000/api/directions/${this.selectedTo.id}/places`);
+                    const cityData = response.data;
+                    this.places = cityData.map((place) => ({
+                        id: place.id,
+                        title: place.title,
+                        photo: place.photo,
+                        description: place.description
+                    }));
+                }
             } catch (error) {
-                console.error('Error fetching user data:', error);
+                console.error('Error fetching places data:', error);
             }
         },
         goToPage(id) {
@@ -289,21 +304,19 @@ export default {
         },
         async fetchCities() {
             try {
-                const response = await axiosApiInstanceAuth.get(`http://127.0.0.1:8000/api/directions/list/`);
+                const response = await axios.get(`http://127.0.0.1:8000/api/directions/list/`);
                 const cityData = response.data;
-                console.log(cityData);
-                this.cities = response.data.results.map((city) => ({
+                this.cities = cityData.results.map((city) => ({
                     id: city.id,
                     city: city.city
                 }));
 
-                // Устанавливаем значения по умолчанию после загрузки списка городов
                 if (this.cities.length > 0) {
                     this.selectedFrom = this.cities[0];
                     this.selectedTo = this.cities[1] || this.cities[0];
                 }
             } catch (error) {
-                console.error('Error fetching user data:', error);
+                console.error('Error fetching cities data:', error);
             }
         }
     },
@@ -315,7 +328,7 @@ export default {
             if (this.selectedMonth === null) {
                 return [];
             }
-            const days = new Date(2024, this.selectedMonth, 0).getDate(); // 2024 - високосный год для корректного определения февраля
+            const days = new Date(2024, this.selectedMonth, 0).getDate();
             return Array.from({ length: days }, (_, i) => i + 1);
         },
         formattedDate() {
@@ -323,7 +336,7 @@ export default {
                 return `${String(this.selectedDay).padStart(2, '0')}-${String(this.selectedMonth).padStart(2, '0')}`;
             }
             return '';
-        }
+        },
     }
 };
 </script>

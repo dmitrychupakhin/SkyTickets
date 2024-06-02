@@ -3,7 +3,7 @@
     <div :class="['col-12 col-md-6', isReverse ? 'order-2 order-md-2' : 'order-2 order-md-1']">
         <div class="row w-100 h-100 m-0 p-0 justify-content-center align-items-center">
             <div class="col-10">
-                <div class="d-flex flex-column h-100">
+                <div class="d-flex flex-column h-100 justify-content-center align-items-center">
                     <div class="col-12 fs-1 mb-2">
                         {{ element.title }}
                     </div>
