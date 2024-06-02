@@ -25,7 +25,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      email: ''
+      email: '',
     };
   },
   methods: {
@@ -35,7 +35,7 @@ export default {
           email: this.email
         });
         console.log('Recovery email sent:', response.data);
-        // Handle success (e.g., show a success message)
+        this.$router.push({ name: 'reset-password-token' });
       } catch (error) {
         console.error('Error sending recovery email:', error);
         // Handle error (e.g., show an error message)
