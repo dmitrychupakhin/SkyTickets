@@ -17,6 +17,7 @@ class AllDirectionsAPIView(generics.ListAPIView):
     permission_classes = [AllowAny]
     serializer_class = AllDirSerializer
     queryset = Direction.objects.all()
+
     
 class PopularPlacesAPIView(APIView):
     
@@ -28,7 +29,7 @@ class PopularPlacesAPIView(APIView):
             queryset = PopularPlace.objects.filter(city=city_id)
             for obj in queryset:
                 if(obj.photo):
-                    obj_p = obj.photo
+                    obj_p = "http://127.0.0.1:8000"+obj.photo
                 else:
                     obj_p = None
                 temp = {}
@@ -46,6 +47,12 @@ class PopularPlacesAPIView(APIView):
         else:
             queryset = PopularPlace.objects.filter(city=city_id)
             serializer = PlaceSerializer(queryset, many=True)
+            for obj in serializer.data:
+                if obj.get('photo'):
+                    obj['photo'] = "http://127.0.0.1:8000" + obj['photo']
+                else:
+                    obj['photo'] = None
+            print(serializer.data)
             return Response(serializer.data)
     
 class AllDetailDirectionsPagination(PageNumberPagination):
