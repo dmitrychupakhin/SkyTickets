@@ -40,16 +40,17 @@ export default {
     },
     data(){
         return{
-            cities: []
+            cities: [],
+            page: 1,
         }
     },
     methods: {
         async fetchCities() {
             try {
-                const response = await axiosApiInstanceAuth.get(`http://127.0.0.1:8000/api/directions/popular/`);
+                const response = await axiosApiInstanceAuth.get(`http://127.0.0.1:8000/api/directions/popular/?page=${this.page}`);
                 const cityData = response.data;
                 console.log(cityData);
-                this.cities = response.data.map((city, index) => ({
+                this.cities = response.data.results.map((city, index) => ({
                     id: city.id,
                     title: city.city,
                     photo: city.photo,

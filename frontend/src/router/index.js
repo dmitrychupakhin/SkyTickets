@@ -96,7 +96,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore();
   const token = computed(() => authStore.userInfo.token);
-
+  document.title = 'SkyTickets';
   const checkUser = () => {
     const tokens = JSON.parse(localStorage.getItem('userTokens'));
     console.log(tokens);

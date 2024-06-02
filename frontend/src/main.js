@@ -11,6 +11,12 @@ import 'aos/dist/aos.css'
 
 import components from "@/components/UI"
 
+console.log = function() {};
+console.warn = function() {};
+console.error = function() {};
+console.info = function() {};
+console.debug = function() {};
+
 
 const app = createApp(App)
 const pinia = createPinia();

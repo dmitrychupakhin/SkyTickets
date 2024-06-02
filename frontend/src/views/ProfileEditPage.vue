@@ -1,19 +1,19 @@
 <template>
 <div>
     <Navbar></Navbar>
-    <div class="row mx-1 mx-md-5 justify-content-center mb-5 mt-2" style="min-height: 100vh;">
-        <div class="col-8 py-4">
-            <div class="row position-relative shadow rounded py-4 px-3 mb-4">
+    <div class="row mx-1 mx-1 mx-md-5 justify-content-center mb-5 mt-2" style="min-height: 100vh;">
+        <div class="col-12 col-md-8 py-4">
+            <div class="row position-relative shadow rounded py-4 px-1 px-md-3 mb-4">
                 <div class="col-12 text-center fw-light fs-2 mb-5">
                     Личная информация
                 </div>
-                <div class="col-6 d-flex justify-content-center mb-2 px-5" style="height: min-content;">
+                <div class="col-12 col-md-6 d-flex justify-content-center mb-2 px-5" style="height: min-content;">
                     <div class="ratio ratio-1x1 position-relative rounded" style="width: 100%; max-height: 100%;">
                         <img :src="userImage" @click="triggerFileInput" alt="User Image" class="userImage shadow" style="object-fit: cover; width: 100%; height: 100%; cursor: pointer; border-radius: 50%;" />
                     </div>
                     <input type="file" ref="fileInput" @change="onFileSelected" style="display: none;" />
                 </div>
-                <div class="col-6 mb-2">
+                <div class="col-md-6 col-12 mb-2">
                     <div class="row m-0 p-0">
                         <div class="col-12">
                             <label for="username" class="inp mb-2 w-100">
@@ -58,7 +58,7 @@
                     Контакты
                 </div>
                 <div class="row m-0 p-0">
-                    <div class="col-6">
+                    <div class="col-12 col-md-6">
                         <label for="phone" class="inp mb-2 w-100">
                             <input v-model="phone" type="tel" id="phone" placeholder="&nbsp;">
                             <span class="label">Номер телефона</span>
@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <div class="row m-0 p-0">
-                    <div class="col-6">
+                    <div class="col-12 col-md-6">
                         <label for="email" class="inp mb-2 w-100">
                             <input v-model="email" type="email" id="email" placeholder="&nbsp;">
                             <span class="label">Почта</span>

@@ -273,6 +273,7 @@ export default {
                 const response = await axiosApiInstanceAuth.get(`http://127.0.0.1:8000/api/directions/${this.selectedTo.id}/places/`);
                 const cityData = response.data;
                 console.log(cityData);
+                console.log("123");
                 this.places = response.data.map((place) => ({
                     id: place.id,
                     title: place.title,
@@ -291,7 +292,7 @@ export default {
                 const response = await axiosApiInstanceAuth.get(`http://127.0.0.1:8000/api/directions/list/`);
                 const cityData = response.data;
                 console.log(cityData);
-                this.cities = response.data.map((city) => ({
+                this.cities = response.data.results.map((city) => ({
                     id: city.id,
                     city: city.city
                 }));
