@@ -44,19 +44,23 @@
             </div>
         </div>
     </div>
-    <div class="row mx-0 px-1 px-md-5 mb-4" data-aos="fade-up">
+    <div v-if="isFactsLoading" class="row justify-content-center mx-0 mb-4">
+        <div class="spinner-border" style="color: var(--custom-purple-color);" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    <div v-else class="row mx-0 px-1 px-md-5 mb-4" data-aos="fade-up">
         <div class="col-12 mx-0 px-0">
             <div class="row px-0 px-md-0 mx-md-0">
-                <div class="col-12 col-md-6 pb-2 p-md-3 ps-md-0">
-                    <div class="row w-100 mx-0 border custom-border-color p-4 p-md-5 ps-md-0">
-                        <div class="col-12 text-center fs-4 mb-2">Количество жителей</div>
+                <div class="col-12 col-md-6 pb-2 p-md-3" v-for="(fact, index) in facts" :key="fact.title" :class="{ 'ps-md-0': index % 2 === 0, 'pe-md-0': index % 2 !== 0 }">
+                    <div class="row w-100 h-100 mx-0 border custom-border-color p-4 p-md-5">
+                        <div class="col-12 text-center fs-4 mb-2">{{ fact.title }}</div>
                         <div class="col-12 d-flex justify-content-center mb-3">
                             <div class="pb-2 border-bottom custom-border-color" style="width: 60px;"></div>
                         </div>
-                        <div class="col-12 text-center fs-6 fw-light">{{ population }}</div>
+                        <div class="col-12 text-center fs-6 fw-light">{{ fact.description }}</div>
                     </div>
                 </div>
-                <!-- Повторите блок для других интересных фактов -->
             </div>
         </div>
     </div>
@@ -84,7 +88,7 @@
                 <div class="mx-0 px-0">
                     <DirectionElementList></DirectionElementList>
                     <div class="col-12 d-flex justify-content-center">
-                        <ButtonOne class="px-4 py-2 fs-5 rounded-pill">Показать еще</ButtonOne>
+                        <ButtonOne class="px-4 py-2 fs-5 rounded-pill" @click="fetchFactsData">Показать еще</ButtonOne>
                     </div>
                 </div>
             </div>
@@ -94,9 +98,8 @@
 </div>
 </template>
 
-    
-    
 <script>
+import axiosApiInstanceAuth from '../api';
 import axios from 'axios';
 import DirectionElementList from "@/components/DirectionElementList"
 
@@ -109,34 +112,46 @@ export default {
             cityName: '',
             cityDescription: '',
             cityImage: '',
-            population: '',
-            // Другие переменные для данных
+            facts: [],
+            isFactsLoading: true
         };
     },
     methods: {
-        fetchData() {
+        async fetchData() {
             const id = this.$route.params.id;
-            axios.get(`https://localhost/api/direction/${id}`)
-                .then(response => {
-                    const data = response.data;
-                    this.cityName = data.name;
-                    this.cityDescription = data.description;
-                    this.cityImage = data.image;
-                    this.population = data.population;
-                    // Заполните другие переменные данными из ответа
-                })
-                .catch(error => {
-                    console.error("Ошибка при получении данных:", error);
+            try {
+                const response = await axiosApiInstanceAuth.get(`http://127.0.0.1:8000/api/directions/${id}/`);
+                const cityData = response.data;
+                this.cityName = cityData.city,
+                    this.cityDescription = cityData.description,
+                    this.cityImage = cityData.photo
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        },
+        async fetchFactsData() {
+            const id = this.$route.params.id;
+            try {
+                const response = await axiosApiInstanceAuth.post(`http://127.0.0.1:8000/api/directions/facts/`, {
+                    direction: id
                 });
-        }
+                const cityData = response.data;
+                console.log(cityData);
+                const factsArray = Object.entries(response.data).map(([key, value]) => ({ title: key, description: value }));
+                this.facts = factsArray;
+                this.isFactsLoading = false;
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        },
     },
     created() {
         this.fetchData();
+        this.fetchFactsData();
     }
 };
 </script>
-    
-    
+
 <style scoped>
 /* Ваши стили */
 </style>

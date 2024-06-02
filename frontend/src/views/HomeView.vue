@@ -10,7 +10,7 @@
             Сервис поможет подобрать вам удобный маршут, исходя из ваших предпочтений,<br /> с учётом ваших финансовых возможностей.
         </div>
         <div class="position-relative d-flex justify-content-center">
-            <ButtonOne class="px-4 py-2 fs-5 rounded-pill position-absolute z-2 mt-4" @click="calc">Рассчитать</ButtonOne>
+            <ButtonOne class="px-4 py-2 fs-5 rounded-pill position-absolute z-2 mt-4" @click="scrollToSection">Рассчитать</ButtonOne>
         </div>
         <div class="col-12 position-relative video-container mx-0 px-0" data-aos="fade-up">
             <img class="position-absolute video-overlay" :src="require('@/assets/home-video-head.svg')" alt="Overlay">
@@ -29,7 +29,7 @@
             </video>
         </div>
     </div>
-    <div class="row mx-0 px-1 px-md-5 my-5" data-aos="fade-up">
+    <div ref="targetSection" class="row mx-0 px-1 px-md-5 my-5" data-aos="fade-up">
         <div class="col-12 border custom-border-color">
             <div class="row m-0 p-1 p-md-4">
                 <div class="col-12 text-center fs-5 fw-light custom-purple-text-color mb-3">Какая будет стоимость?</div>
@@ -46,7 +46,7 @@
                 </div>
                 <div class="col-12 col-md-6 p-4 rounded-3">
                     <div class="mb-3">
-                        <label for="from" class="form-label">От:</label>
+                        <label for="from" class="form-label">От</label>
                         <select v-model="selectedFrom" id="from" class="form-select red-background">
                             <option v-for="city in cities" :key="city.id" :value="city">
                                 {{ city.city }}
@@ -55,7 +55,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="to" class="form-label">Куда:</label>
+                        <label for="to" class="form-label">Куда</label>
                         <select v-model="selectedTo" id="to" class="form-select red-background">
                             <option v-for="city in cities" :key="city.id" :value="city">
                                 {{ city.city }}
@@ -64,7 +64,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="date" class="form-label">Дата:</label>
+                        <label for="date" class="form-label">Дата</label>
                         <div class="d-flex gap-2">
                             <select v-model="selectedMonth" id="month" class="form-select red-background">
                                 <option v-for="(month, index) in months" :key="index" :value="index + 1">
@@ -80,12 +80,12 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="time" class="form-label">Время:</label>
+                        <label for="time" class="form-label">Время</label>
                         <input type="time" v-model="selectedTime" id="time" class="form-control red-background" />
                     </div>
 
                     <div class="mb-3">
-                        <label for="ticketType" class="form-label">Тип билета:</label>
+                        <label for="ticketType" class="form-label">Тип билета</label>
                         <select v-model="selectedType" id="ticketType" class="form-select red-background">
                             <option v-for="(tType, index) in ticketType" :key="index" :value="index + 1">
                                 {{ tType }}
@@ -93,11 +93,11 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="flightTime" class="form-label">Время на полет:</label>
+                        <label for="flightTime" class="form-label">Время на полет</label>
                         <input type="time" v-model="selectedFlightTime" id="flightTime" class="form-control red-background" />
                     </div>
                     <div class="mb-4">
-                        <label for="numTransfers" class="form-label">Количество пересадок:</label>
+                        <label for="numTransfers" class="form-label">Количество пересадок</label>
                         <select v-model="selectedNumTransfers" id="numTransfers" class="form-select red-background">
                             <option v-for="(tType, index) in numTransfers" :key="index" :value="index + 1">
                                 {{ tType }}
@@ -108,12 +108,41 @@
                         <ButtonOne class="px-4 py-2 fs-5 rounded-pill" @click="calc">Рассчитать</ButtonOne>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 p-4 rounded-3">
-                    <div class="row">
+                <div v-if="isCalcLoading"  class="col-12 col-md-6 p-4 rounded-3 pt-5">
+                    <div class="row justify-content-center mx-0 mb-4">
+                        <div class="spinner-border" style="color: var(--custom-purple-color);" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <div v-else-if="!isCalcLoading && isCalced" class="col-12 col-md-6 p-4 rounded-3 pt-5">
+                    <div class="row mb-3">
                         <div class="col-12 text-center fs-5 fw-light">
                             Нейросеть 🤖 определила наиболее вероятную цену
                         </div>
                     </div>
+                    <div class="row" v-if="calcResults.length > 0">
+                        <div class="col-12" v-for="calcResult in calcResults" :key="calcResult.id">
+                            <div class="row fw-light mb-3 fs-5">
+                                <div class="col-12 d-flex gap-2 mb-2">
+                                    <div class="fs-4 d-flex align-items-center gap-2">
+                                        <img style="width: 30px;" :src="require('@/assets/company.svg')">
+                                        <div>{{ calcResult.title }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex gap-2">
+                                    <div>Цена: </div>
+                                    <div class="fw-normal">{{ calcResult.price }} ₽</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-else class="fw-light text-center">
+                        Данный перелет не возможен ):
+                    </div>
+                </div>
+                <div v-else class="col-12 col-md-6 p-4 rounded-3 pt-5">
+                    
                 </div>
             </div>
         </div>
@@ -160,7 +189,7 @@
                                     Места избранные людьми
                                 </div>
                                 <div class="col-12">
-                                    <ButtonOne class="px-4 py-2 fs-5 rounded-pill text-nowrap">Узнать больше</ButtonOne>
+                                    <ButtonOne class="px-4 py-2 fs-5 rounded-pill text-nowrap" @click="goToPage">Узнать больше</ButtonOne>
                                 </div>
                             </div>
                         </div>
@@ -173,8 +202,6 @@
 </div>
 </template>
 
-      
-    
 <script>
 import axiosApiInstanceAuth from '../api';
 import PlaceElementList from "@/components/PlaceElementList";
@@ -185,6 +212,8 @@ export default {
     },
     data() {
         return {
+            isCalced: false,
+            isCalcLoading: false,
             places: [],
             cities: [],
             numTransfers: [1, 2, 3],
@@ -197,6 +226,7 @@ export default {
             selectedTime: '00:00', // значение по умолчанию: полночь
             selectedFlightTime: '01:00', // значение по умолчанию: 1 час
             selectedNumTransfers: 1, // значение по умолчанию: 1 пересадка
+            calcResults: [],
             months: [
                 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
                 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
@@ -204,8 +234,41 @@ export default {
         };
     },
     methods: {
+        scrollToSection() {
+            this.$refs.targetSection.scrollIntoView({ behavior: 'smooth' });
+        },
         async calc() {
+            this.isCalcLoading = true;
             console.log(this.selectedTo);
+            try {
+                const flightTimeParts = this.selectedFlightTime.split(':');
+                const formattedFlightTime = `${flightTimeParts[0]}h ${flightTimeParts[1]}m`;
+                const response = await axiosApiInstanceAuth.post(`http://127.0.0.1:8000/api/directions/price/`, {
+                    from: this.selectedFrom.id,
+                    to: this.selectedTo.id,
+                    date: this.selectedMonth.toString().padStart(2, '0') + '-' + this.selectedDay.toString().padStart(2, '0'),
+                    dep_time: this.selectedTime,
+                    clas: this.selectedType,
+                    stop: this.selectedNumTransfers,
+                    time_taken: formattedFlightTime
+                });
+
+                const responseData = response.data;
+                console.log(responseData);
+
+                if (responseData && responseData.result && Array.isArray(responseData.result)) {
+                    this.calcResults = responseData.result.map((place) => ({
+                        title: place[0],
+                        price: parseFloat(place[1]).toFixed(2)
+                    }));
+                    this.isCalcLoading = false;
+                    this.isCalced = true;
+                } else {
+                    console.error('Invalid response format');
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
             try {
                 const response = await axiosApiInstanceAuth.get(`http://127.0.0.1:8000/api/directions/${this.selectedTo.id}/places/`);
                 const cityData = response.data;
@@ -219,6 +282,9 @@ export default {
             } catch (error) {
                 console.error('Error fetching user data:', error);
             }
+        },
+        goToPage(id) {
+            this.$router.push({ name: 'popular' });
         },
         async fetchCities() {
             try {
@@ -260,8 +326,7 @@ export default {
     }
 };
 </script>
-    
-    
+
 <style scoped>
 .form-label,
 .form-select {}
