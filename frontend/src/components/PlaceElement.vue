@@ -11,10 +11,13 @@
                         {{ element.description }}
                     </div>
                     <div class="col-12 mt-auto mb-3 mb-md-0">
-                        <ButtonTwo class="d-flex gap-2 px-4 py-2 fs-5 rounded-pill" @click="saveElement">
-                            <div>Сохранить</div>
-                            <i v-if="!isFavorite" class="bi bi-bookmark"></i>
-                            <i v-if="isFavorite" class="bi bi-bookmark-fill"></i>
+                        <ButtonTwo class="d-flex gap-2 px-4 py-2 fs-6 align-items-center rounded-pill" @click="saveElement">
+                            <div v-if="isFavorite == 0">В избранное</div>
+                            <div v-else-if="isFavorite == 1">В избранном</div>
+                            <div v-else>В избранное</div>
+                            <i v-if="isFavorite == 0" class="bi bi-bookmark"></i>
+                            <i v-else-if="isFavorite == 1" class="bi bi-bookmark-fill"></i>
+                            <div v-else class="bi bi-bookmark"></div>
                         </ButtonTwo>
                     </div>
                 </div>
@@ -54,24 +57,41 @@ export default {
     setup(props) {
         const authStore = useAuthStore();
         const router = useRouter();
-        const isFavorite = ref(false);
+        const isFavorite = ref(props.element.isFavorite);
 
         const token = computed(() => authStore.userInfo.token);
 
         const saveElement = async () => {
+            console.log('is')
+            console.log(isFavorite.value);
             if (!token.value) {
                 router.push({ name: 'sign-in' });
                 return; // Exit the function to prevent further code execution
             }
-            try {
-                const response = await axiosApiInstanceAuth.post(`http://127.0.0.1:8000/api/users/addfavorite/`, {
-                    place_id: props.element.id,
-                });
-                const cityData = response.data;
-                isFavorite.value = true;
-                console.log(cityData);
-            } catch (error) {
-                console.error('Error saving element:', error);
+            if(isFavorite.value == 0){
+                    try {
+                    const response = await axiosApiInstanceAuth.post(`http://127.0.0.1:8000/api/users/addfavorite/`, {
+                        place_id: props.element.id,
+                    });
+                    const cityData = response.data;
+                    isFavorite.value = true;
+                    console.log(cityData);
+                } catch (error) {
+                    console.error('Error saving element:', error);
+                }
+            }
+            else{
+                console.log(props.element.id)
+                try {
+                    const response = await axiosApiInstanceAuth.post(`http://127.0.0.1:8000/api/users/delfavorite/`, {
+                        place_id: props.element.id,
+                    });
+                    const cityData = response.data;
+                    isFavorite.value = false;
+                    console.log(cityData);
+                } catch (error) {
+                    console.error('Error saving element:', error);
+                }
             }
         };
 

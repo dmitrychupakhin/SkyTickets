@@ -147,7 +147,7 @@
             </div>
         </div>
     </div>
-    <div class="row mx-0 px-1 px-md-5 my-5" data-aos="fade-up">
+    <div v-if="places.length != 0" class="row mx-0 px-1 px-md-5 my-5" data-aos="fade-up">
         <div class="col-12 px-0">
             <div class="row m-0">
                 <div class="col-12 text-center fs-5 fw-light custom-purple-text-color mb-3">Куда можно сходить?</div>
@@ -163,9 +163,9 @@
                 </div>
                 <div class="mx-0 px-0">
                     <PlaceElementList :elements="places"></PlaceElementList>
-                    <div class="col-12 d-flex justify-content-center">
+                    <!-- <div class="col-12 d-flex justify-content-center">
                         <ButtonOne class="px-4 py-2 fs-5 rounded-pill">Показать еще</ButtonOne>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -278,6 +278,7 @@ export default {
                 if (!(computed(() => authStore.userInfo.token).value)) {
                     const response = await axios.get(`http://127.0.0.1:8000/api/directions/${this.selectedTo.id}/places`);
                     const cityData = response.data;
+                    console.log(cityData);
                     this.places = cityData.map((place) => ({
                         id: place.id,
                         title: place.title,
@@ -288,11 +289,13 @@ export default {
                 else{
                     const response = await axiosApiInstanceAuth.get(`http://127.0.0.1:8000/api/directions/${this.selectedTo.id}/places`);
                     const cityData = response.data;
+                    console.log(cityData);
                     this.places = cityData.map((place) => ({
                         id: place.id,
                         title: place.title,
                         photo: place.photo,
-                        description: place.description
+                        description: place.description,
+                        isFavorite: place.saved
                     }));
                 }
             } catch (error) {

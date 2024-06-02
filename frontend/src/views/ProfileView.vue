@@ -70,11 +70,12 @@
             <div class="col-12 fs-6 text-center mb-5">
                 <div class="row justify-content-center">
                     <div class="col-8 fw-light">
-                        Вам приглянулись какие-то места, но вы не можете себе позволить посетить их в данный момент. 
+                        Вам приглянулись какие-то места, но вы не можете себе позволить посетить их в данный момент.
                         Создайте свой список мечты для будущих поездок.
                     </div>
                 </div>
             </div>
+            <PlaceElementList :elements="places"></PlaceElementList>
         </div>
     </div>
     <Footer></Footer>
@@ -82,14 +83,19 @@
 </template>
 
 <script>
+import PlaceElementList from "@/components/PlaceElementList";
 import { ref, onMounted } from 'vue';
 import axiosApiInstanceAuth from '@/api';
 import { useAuthStore } from '@/store/auth';
 import { useRouter } from 'vue-router';
 
 export default {
+    components: {
+        PlaceElementList
+    },
     data() {
         return {
+            places: [],
             profileImage: '',
             profileTitle: '',
             fullName: '',
@@ -132,6 +138,20 @@ export default {
                 console.error('Error fetching user data:', error);
             } finally {
                 this.isLoading = false;
+            }
+            try {
+                const response = await axiosApiInstanceAuth.get(`http://127.0.0.1:8000/api/users/${this.authStore.userInfo.userId}/favorites/`);
+                const cityData = response.data;
+                console.log(cityData);
+                this.places = cityData.map((place) => ({
+                    id: place.id,
+                    title: place.title,
+                    photo: place.photo,
+                    description: place.description,
+                    isFavorite: place.saved
+                }));
+            } catch (error) {
+                console.error('Error fetching places data:', error);
             }
         },
         goToPage() {

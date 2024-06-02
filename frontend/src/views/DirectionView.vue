@@ -86,10 +86,10 @@
         <div class="col-12 px-0">
             <div class="row m-0">
                 <div class="mx-0 px-0">
-                    <DirectionElementList></DirectionElementList>
-                    <div class="col-12 d-flex justify-content-center">
+                    <PlaceElementList :elements="places"></PlaceElementList>
+                    <!-- <div class="col-12 d-flex justify-content-center">
                         <ButtonOne class="px-4 py-2 fs-5 rounded-pill" @click="fetchFactsData">Показать еще</ButtonOne>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -101,14 +101,17 @@
 <script>
 import axiosApiInstanceAuth from '../api';
 import axios from 'axios';
-import DirectionElementList from "@/components/DirectionElementList"
+import PlaceElementList from "@/components/PlaceElementList"
+import { useAuthStore } from '@/store/auth';
+import { computed } from 'vue';
 
 export default {
     components: {
-        DirectionElementList
+        PlaceElementList
     },
     data() {
         return {
+            places: [],
             cityName: '',
             cityDescription: '',
             cityImage: '',
@@ -120,7 +123,7 @@ export default {
         async fetchData() {
             const id = this.$route.params.id;
             try {
-                const response = await axiosApiInstanceAuth.get(`http://127.0.0.1:8000/api/directions/${id}/`);
+                const response = await axios.get(`http://127.0.0.1:8000/api/directions/${id}/`);
                 const cityData = response.data;
                 this.cityName = cityData.city,
                     this.cityDescription = cityData.description,
@@ -128,11 +131,40 @@ export default {
             } catch (error) {
                 console.error('Error fetching user data:', error);
             }
+            try {
+                const id = this.$route.params.id;
+                const authStore = useAuthStore();
+                if (!(computed(() => authStore.userInfo.token).value)) {
+                    const response = await axios.get(`http://127.0.0.1:8000/api/directions/${id}/places`);
+                    const cityData = response.data;
+                    console.log(cityData);
+                    this.places = cityData.map((place) => ({
+                        id: place.id,
+                        title: place.title,
+                        photo: place.photo,
+                        description: place.description,
+                    }));
+                }
+                else{
+                    const response = await axiosApiInstanceAuth.get(`http://127.0.0.1:8000/api/directions/${id}/places`);
+                    const cityData = response.data;
+                    console.log(cityData);
+                    this.places = cityData.map((place) => ({
+                        id: place.id,
+                        title: place.title,
+                        photo: place.photo,
+                        description: place.description,
+                        isFavorite: place.saved
+                    }));
+                }
+            } catch (error) {
+                console.error('Error fetching places data:', error);
+            }
         },
         async fetchFactsData() {
             const id = this.$route.params.id;
             try {
-                const response = await axiosApiInstanceAuth.post(`http://127.0.0.1:8000/api/directions/facts/`, {
+                const response = await axios.post(`http://127.0.0.1:8000/api/directions/facts/`, {
                     direction: id
                 });
                 const cityData = response.data;
