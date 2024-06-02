@@ -11,8 +11,10 @@ import g4f
 from django.core import serializers
 from rest_framework.pagination import PageNumberPagination
 from users.models import *
+from rest_framework.permissions import AllowAny
 
 class AllDirectionsAPIView(generics.ListAPIView):
+    permission_classes = [AllowAny]
     serializer_class = AllDirSerializer
     queryset = Direction.objects.all()
     
