@@ -104,7 +104,8 @@ class  GetUserFavoriteAPIView(APIView):
                     'title': place.title,
                     'photo': place_p,
                     'description': place.description,
-                    'city': place.city.city
+                    'city': place.city.city,
+                    'saved': 1
                 }
                 data.append(temp_place)
             print(data)
